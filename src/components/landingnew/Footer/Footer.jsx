@@ -34,23 +34,10 @@ const Footer = () => (
               GitHub
             </a>
           </div>
-
-          <div className="ln-footer-col">
-            <span className="ln-footer-col-title">Vue & Svelte Bits</span>
-            <a href="https://vue-bits.dev/" target="_blank" rel="noopener noreferrer" className="ln-footer-link">
-              Vue Bits
-            </a>
-            <a href="https://sveltebits.xyz/" target="_blank" rel="noopener noreferrer" className="ln-footer-link">
-              Svelte Bits
-            </a>
-          </div>
         </nav>
       </div>
 
       <div className="ln-footer-bottom">
-        <p className="ln-footer-attribution">
-          Created with <AiFillHeart className="ln-footer-heart" /> by ArkDev
-        </p>
         <p className="ln-footer-copy">© {new Date().getFullYear()} ArkDev</p>
       </div>
     </motion.div>
