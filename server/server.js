@@ -324,13 +324,17 @@ app.post('/api/debug-log', (req, res) => {
 });
 
 // Start Server
-app.listen(PORT, () => {
-  console.log(`
-  🚀 ===============================================
-  🚀 ArkDev Pro SaaS Backend is running!
-  🚀 Port: ${PORT}
-  🚀 Mode: Development (SQLite DB active)
-  🚀 Live active database: ${db.name}
-  🚀 ===============================================
-  `);
-});
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`
+    🚀 ===============================================
+    🚀 ArkDev Pro SaaS Backend is running!
+    🚀 Port: ${PORT}
+    🚀 Mode: Development (SQLite DB active)
+    🚀 Live active database: ${db.name}
+    🚀 ===============================================
+    `);
+  });
+}
+
+export default app;

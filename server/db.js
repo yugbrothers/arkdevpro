@@ -1,9 +1,31 @@
 import Database from 'better-sqlite3';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dbPath = path.resolve(__dirname, 'database.sqlite');
+
+let dbPath;
+if (process.env.VERCEL) {
+  const tmpPath = '/tmp/database.sqlite';
+  const originalPath = path.resolve(__dirname, 'database.sqlite');
+  
+  if (!fs.existsSync(tmpPath)) {
+    try {
+      if (fs.existsSync(originalPath)) {
+        fs.copyFileSync(originalPath, tmpPath);
+      } else {
+        fs.writeFileSync(tmpPath, '');
+      }
+    } catch (err) {
+      console.error('Failed to copy database to /tmp:', err);
+    }
+  }
+  dbPath = tmpPath;
+} else {
+  dbPath = path.resolve(__dirname, 'database.sqlite');
+}
+
 const db = new Database(dbPath);
 
 // Enable WAL mode for performance
