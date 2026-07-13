@@ -4,6 +4,7 @@ import Providers from './components/layout/Providers';
 import { useEffect } from 'react';
 import { ActiveRouteProvider } from './components/context/ActiveRouteContext/ActiveRouteContext';
 import { forceChakraDarkTheme } from './utils/utils';
+import GoogleAnalytics from './components/GoogleAnalytics';
 
 import AnnouncementModal from './components/common/AnnouncementModal/AnnouncementModal';
 import SidebarLayout from './components/layout/SidebarLayout';
@@ -63,6 +64,7 @@ export default function App() {
 
   return (
     <Router>
+      <GoogleAnalytics />
       <NuqsAdapter>
         <ActiveRouteProvider>
           <AppContent />
