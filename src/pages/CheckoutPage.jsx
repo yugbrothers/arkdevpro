@@ -74,6 +74,23 @@ export default function CheckoutPage() {
         });
         setSuccess(true);
         toast.success('Lifetime Subscription Activated! 🎉');
+
+        // Trigger Google Analytics 4 purchase conversion event
+        if (window.gtag) {
+          window.gtag('event', 'purchase', {
+            transaction_id: orderData.order_id,
+            value: parseFloat(orderData.amount),
+            currency: 'INR',
+            items: [
+              {
+                item_id: orderData.plan,
+                item_name: `ArkDev Pro Lifetime Access - ${orderData.plan.toUpperCase()} Plan`,
+                price: parseFloat(orderData.amount),
+                quantity: 1
+              }
+            ]
+          });
+        }
       }
     } catch (err) {
       toast.error('Checkout failed. Please try again.');

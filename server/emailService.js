@@ -185,6 +185,9 @@ export const emailService = {
             <td style="padding: 6px 0; text-align: right; color: #f3f4f6;">${new Date().toLocaleDateString()}</td>
           </tr>
         </table>
+        <div style="margin-top: 25px; text-align: center;">
+          <a href="https://arkdevpro.com/?utm_source=email&utm_medium=invoice&utm_campaign=payment_success" style="display: inline-block; background-color: #6366f1; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px;">Access Your Account</a>
+        </div>
         <div style="margin-top: 30px; text-align: center; border-top: 1px solid #1e293b; padding-top: 20px;">
           <p style="font-size: 12px; color: #64748b; margin: 0;">If you have any questions, please contact support at support@arkdevpro.com</p>
         </div>
