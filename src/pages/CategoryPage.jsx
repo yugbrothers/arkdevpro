@@ -65,7 +65,15 @@ const lazyCache = {};
 const getLazyComponent = (subcategory, componentFactory) => {
   if (!subcategory || !componentFactory) return null;
   if (!lazyCache[subcategory]) {
-    lazyCache[subcategory] = lazy(componentFactory);
+    lazyCache[subcategory] = lazy(async () => {
+      try {
+        return await componentFactory();
+      } catch (error) {
+        console.error("Demo component chunk load failed, forcing page reload...", error);
+        window.location.reload();
+        return new Promise(() => {}); // keep suspense active while page reloads
+      }
+    });
   }
   return lazyCache[subcategory];
 };

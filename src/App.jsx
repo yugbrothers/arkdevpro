@@ -57,17 +57,30 @@ class GlobalErrorBoundary extends Component {
   }
 }
 
-const LandingPage = lazy(() => import('./pages/LandingPage'));
-const CategoryPage = lazy(() => import('./pages/CategoryPage'));
-const ShowcasePage = lazy(() => import('./pages/ShowcasePage'));
-const FavoritesPage = lazy(() => import('./pages/FavoritesPage'));
-const SponsorsPage = lazy(() => import('./pages/SponsorsPage'));
-const ToolsPage = lazy(() => import('./pages/ToolsPage'));
-const AuthPage = lazy(() => import('./pages/AuthPage'));
-const ProfilePage = lazy(() => import('./pages/ProfilePage'));
-const PricingPage = lazy(() => import('./pages/PricingPage'));
-const CheckoutPage = lazy(() => import('./pages/CheckoutPage'));
-const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+// Helper to retry dynamic imports when chunk files change in production build (avoiding blank page)
+const lazyRetry = (componentImport) => {
+  return lazy(async () => {
+    try {
+      return await componentImport();
+    } catch (error) {
+      console.error("Chunk load failed, forcing page reload...", error);
+      window.location.reload();
+      return new Promise(() => {}); // keeps suspense active while page reloads
+    }
+  });
+};
+
+const LandingPage = lazyRetry(() => import('./pages/LandingPage'));
+const CategoryPage = lazyRetry(() => import('./pages/CategoryPage'));
+const ShowcasePage = lazyRetry(() => import('./pages/ShowcasePage'));
+const FavoritesPage = lazyRetry(() => import('./pages/FavoritesPage'));
+const SponsorsPage = lazyRetry(() => import('./pages/SponsorsPage'));
+const ToolsPage = lazyRetry(() => import('./pages/ToolsPage'));
+const AuthPage = lazyRetry(() => import('./pages/AuthPage'));
+const ProfilePage = lazyRetry(() => import('./pages/ProfilePage'));
+const PricingPage = lazyRetry(() => import('./pages/PricingPage'));
+const CheckoutPage = lazyRetry(() => import('./pages/CheckoutPage'));
+const AdminDashboard = lazyRetry(() => import('./pages/AdminDashboard'));
 
 function AppContent() {
   return (
