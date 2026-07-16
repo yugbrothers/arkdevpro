@@ -12,7 +12,7 @@ import SidebarLayout from './components/layout/SidebarLayout';
 class GlobalErrorBoundary extends Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false, error: null };
+    this.state = { hasError: false, error: null, errorInfo: null };
   }
 
   static getDerivedStateFromError(error) {
@@ -20,6 +20,7 @@ class GlobalErrorBoundary extends Component {
   }
 
   componentDidCatch(error, errorInfo) {
+    this.setState({ errorInfo });
     console.error('GlobalErrorBoundary caught an error:', error, errorInfo);
   }
 
@@ -29,10 +30,15 @@ class GlobalErrorBoundary extends Component {
         <div style={{ padding: '40px', background: '#0b0f19', color: '#ef4444', minHeight: '100vh', fontFamily: 'monospace' }}>
           <h2>Application Error</h2>
           <p>The application encountered an uncaught rendering error during navigation:</p>
-          <pre style={{ background: '#1e293b', padding: '16px', borderRadius: '4px', color: '#f87171', overflowX: 'auto' }}>
+          <pre style={{ background: '#1e293b', padding: '16px', borderRadius: '4px', color: '#f87171', overflowX: 'auto', marginBottom: '12px' }}>
             {this.state.error?.toString()}
           </pre>
-          <pre style={{ background: '#1e293b', padding: '16px', borderRadius: '4px', color: '#cbd5e1', overflowX: 'auto', maxHeight: '300px' }}>
+          <h3>React Component Stack:</h3>
+          <pre style={{ background: '#1e293b', padding: '16px', borderRadius: '4px', color: '#cbd5e1', overflowX: 'auto', maxHeight: '200px', marginBottom: '12px' }}>
+            {this.state.errorInfo?.componentStack || 'No component stack trace available'}
+          </pre>
+          <h3>JS Call Stack:</h3>
+          <pre style={{ background: '#1e293b', padding: '16px', borderRadius: '4px', color: '#94a3b8', overflowX: 'auto', maxHeight: '200px', marginBottom: '16px' }}>
             {this.state.error?.stack}
           </pre>
           <button 
@@ -44,8 +50,7 @@ class GlobalErrorBoundary extends Component {
               border: 'none', 
               borderRadius: '4px', 
               cursor: 'pointer',
-              fontWeight: 'bold',
-              marginTop: '16px'
+              fontWeight: 'bold'
             }}
           >
             Reload Page

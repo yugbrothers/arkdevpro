@@ -25,7 +25,9 @@ const LandingPage = () => {
   }, []);
 
   useLayoutEffect(() => {
-    if (loaded) return;
+    if (loaded) {
+      return () => {};
+    }
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
     return () => {
@@ -35,13 +37,19 @@ const LandingPage = () => {
   }, [loaded]);
 
   useEffect(() => {
+    let active = true;
     const start = Date.now();
 
     document.fonts.ready.then(() => {
+      if (!active) return;
       const elapsed = Date.now() - start;
       const remaining = Math.max(0, MIN_LOADER_MS - elapsed);
       setTimeout(reveal, remaining);
     });
+
+    return () => {
+      active = false;
+    };
   }, [reveal]);
 
   return (
