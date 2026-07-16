@@ -13,6 +13,9 @@ export default defineConfig({
   envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
   server: {
     hmr: true,
+    watch: {
+      ignored: ['**/public/r/**']
+    },
     proxy: {
       '/api': {
         target: 'http://localhost:5050',
