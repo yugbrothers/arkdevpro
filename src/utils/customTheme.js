@@ -17,19 +17,20 @@ const tabsRecipe = defineSlotRecipe({
   base: {
     trigger: {
       flex: '0 0 auto',
-      bg: '#120F17',
-      borderRadius: '10px',
-      fontSize: '14px',
-      border: '1px solid #2F293A',
-      h: 9,
-      px: '1rem',
-      transition: 'background-color .3s',
+      bg: '#121212',
+      borderRadius: '6px',
+      fontSize: '13px',
+      border: '1px solid rgba(255, 255, 255, 0.08)',
+      h: 8,
+      px: '0.75rem',
+      transition: 'all .2s ease-in-out',
 
-      _hover: { bg: '#2F293A' },
+      _hover: { bg: 'rgba(255, 255, 255, 0.05)' },
 
       "&[data-state='active']": {
-        color: '#fff',
-        bg: '#2F293A'
+        color: '#ffffff',
+        bg: '#6366f1',
+        borderColor: '#6366f1'
       }
     }
   }
@@ -38,11 +39,12 @@ const tabsRecipe = defineSlotRecipe({
 export const toastStyles = {
   style: {
     fontSize: '12px',
-    borderRadius: '0.75rem',
-    border: '1px solid #2F293A',
+    borderRadius: '8px',
+    border: '1px solid rgba(255, 255, 255, 0.08)',
     color: '#fff',
-    backgroundColor: '#120F17',
-    textAlign: 'center'
+    backgroundColor: '#121212',
+    textAlign: 'center',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)'
   }
 };
 
@@ -56,8 +58,8 @@ export const customTheme = createSystem(defaultConfig, {
     global: {
       'html, body': {
         minHeight: '100vh',
-        fontFamily: '"Geist", sans-serif',
-        backgroundColor: '#120F17'
+        fontFamily: 'var(--font-sans)',
+        backgroundColor: '#000000'
       }
     }
   },
@@ -69,8 +71,8 @@ export const customTheme = createSystem(defaultConfig, {
       },
       variants: {
         solid: {
-          track: { bg: '#2F293A' },
-          filledTrack: { bg: '#fff' }
+          track: { bg: 'rgba(255, 255, 255, 0.08)' },
+          filledTrack: { bg: '#6366f1' }
         }
       },
       defaultProps: { variant: 'solid' }
@@ -78,10 +80,10 @@ export const customTheme = createSystem(defaultConfig, {
     Switch: {
       baseStyle: {
         track: {
-          bg: '#2F293A',
-          _checked: { bg: '#5227FF' },
-          _focus: { boxShadow: '0 0 0 3px #2F293A' },
-          _active: { bg: '#5227FF' }
+          bg: 'rgba(255, 255, 255, 0.08)',
+          _checked: { bg: '#6366f1' },
+          _focus: { boxShadow: '0 0 0 3px rgba(99, 102, 241, 0.2)' },
+          _active: { bg: '#6366f1' }
         },
         thumb: {
           _checked: { bg: 'white' },

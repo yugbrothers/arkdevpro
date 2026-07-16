@@ -6,7 +6,7 @@
   position: relative;
   width: 100%;
   padding: 80px 0 100px;
-  background: #120F17;
+  background: var(--bg-body);
   z-index: 4;
 }
 
@@ -19,9 +19,9 @@
 /* ─── Title ─── */
 
 .ln-features-title {
-  font-family: 'Geist Pixel Line', sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-size: clamp(28px, 4vw, 42px);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: #fff;
@@ -43,23 +43,24 @@
 /* ─── Card ─── */
 
 .ln-features-card {
-  background: rgba(18, 15, 23, 0.45);
+  background: var(--bg-card);
   backdrop-filter: blur(32px) saturate(1.3);
   -webkit-backdrop-filter: blur(32px) saturate(1.3);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
+  border: 1px solid var(--border-primary);
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   box-shadow:
     0 4px 32px rgba(0, 0, 0, 0.25),
     inset 0 0.5px 0 rgba(255, 255, 255, 0.06);
-  transition: border-color 0.3s ease, translate 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
 }
 
 .ln-features-card:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  translate: 0 -2px;
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.15);
 }
 
 /* ─── Card Visual ─── */
@@ -78,11 +79,11 @@
 
 .ln-features-card-body {
   padding: 18px 22px 22px;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-top: 1px solid var(--border-secondary);
 }
 
 .ln-features-card-body h3 {
-  font-family: 'Geist', sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-size: 15px;
   font-weight: 600;
   color: #fff;
@@ -91,10 +92,10 @@
 }
 
 .ln-features-card-body p {
-  font-family: 'Geist', sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-size: 13px;
   line-height: 1.55;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--text-muted);
   margin: 0;
 }
 
@@ -143,20 +144,20 @@
 .ln-feat-pill {
   font-family: 'Geist Mono', monospace;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--text-muted);
   text-decoration: none;
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-secondary);
   border-radius: 7px;
   padding: 5px 12px;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: border-color 0.2s, color 0.2s;
+  transition: all 0.2s ease;
 }
 
 .ln-feat-pill:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  color: rgba(255, 255, 255, 0.85);
+  border-color: var(--color-primary);
+  color: var(--text-primary);
 }
 
 /* ═══════════════════════════════════════
@@ -177,10 +178,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 14px;
-  background: #1a1520;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  color: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  background: #1a1a1a;
+  border: 1px solid var(--border-primary);
+  color: var(--text-muted);
   z-index: 2;
 }
 
@@ -189,7 +190,7 @@
   height: 56px;
   top: calc(50% - 40px);
   left: calc(50% - 28px);
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-primary);
 }
 
 .ln-feat-tool-box--left {
@@ -226,8 +227,8 @@
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #1a1520;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #1a1a1a;
+  border: 1px solid var(--border-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -245,7 +246,7 @@
   top: 50%;
   left: 50%;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-secondary);
 }
 
 .ln-feat-orbit-ring--1 {
@@ -267,12 +268,12 @@
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: #1a1520;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #1a1a1a;
+  border: 1px solid var(--border-primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--text-muted);
   z-index: 2;
 }
 
@@ -379,7 +380,7 @@
   padding: 0 14px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-secondary);
   flex: 1;
 }
 
@@ -393,7 +394,7 @@
 .ln-feat-vrow-label {
   font-family: 'Geist Mono', monospace;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-secondary);
   white-space: nowrap;
   flex-shrink: 0;
   min-width: 80px;
@@ -410,7 +411,7 @@
 .ln-feat-vrow-bar {
   height: 4px;
   border-radius: 2px;
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--border-primary);
 }
 
 /* ═══════════════════════════════════════
@@ -430,7 +431,7 @@
   display: flex;
   flex-direction: column;
   background: rgba(255, 255, 255, 0.005);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-secondary);
   border-radius: 10px;
   overflow: hidden;
 }
@@ -441,7 +442,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-secondary);
   flex-shrink: 0;
 }
 
@@ -458,9 +459,9 @@
 }
 
 .ln-feat-aichat-title {
-  font-family: 'Geist', sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.25);
+  color: var(--text-dimmed);
   letter-spacing: 0.03em;
 }
 
@@ -477,14 +478,14 @@
 .ln-feat-aichat-chevron {
   font-family: 'Geist Mono', monospace;
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--text-dimmed);
   flex-shrink: 0;
 }
 
 .ln-feat-aichat-prompt {
   font-family: 'Geist Mono', monospace;
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--text-muted);
   white-space: nowrap;
   min-height: 1em;
 }
@@ -582,16 +583,16 @@
 }
 
 .ln-feat-stars-label {
-  font-family: 'Geist', sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--text-dimmed);
   letter-spacing: 0.02em;
 }
 
 .ln-feat-stars-count {
-  font-family: 'Geist Pixel Line', sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-size: 52px;
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--text-secondary);
   letter-spacing: -0.03em;
   line-height: 1.15;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.45) 30%, transparent 100%);

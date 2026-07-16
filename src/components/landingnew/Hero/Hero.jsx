@@ -522,17 +522,17 @@ const Hero = () => {
       <svg className="ln-hero-bottom-fade" preserveAspectRatio="none" viewBox="0 0 1 1">
         <defs>
           <linearGradient id="hero-bottom-fade" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#120F17" stopOpacity="0" />
-            <stop offset="50%" stopColor="#120F17" stopOpacity="0" />
-            <stop offset="60%" stopColor="#120F17" stopOpacity="0.03" />
-            <stop offset="68%" stopColor="#120F17" stopOpacity="0.1" />
-            <stop offset="74%" stopColor="#120F17" stopOpacity="0.22" />
-            <stop offset="80%" stopColor="#120F17" stopOpacity="0.38" />
-            <stop offset="85%" stopColor="#120F17" stopOpacity="0.55" />
-            <stop offset="90%" stopColor="#120F17" stopOpacity="0.72" />
-            <stop offset="94%" stopColor="#120F17" stopOpacity="0.87" />
-            <stop offset="97%" stopColor="#120F17" stopOpacity="0.95" />
-            <stop offset="100%" stopColor="#120F17" stopOpacity="1" />
+            <stop offset="0%" stopColor="#000000" stopOpacity="0" />
+            <stop offset="50%" stopColor="#000000" stopOpacity="0" />
+            <stop offset="60%" stopColor="#000000" stopOpacity="0.03" />
+            <stop offset="68%" stopColor="#000000" stopOpacity="0.1" />
+            <stop offset="74%" stopColor="#000000" stopOpacity="0.22" />
+            <stop offset="80%" stopColor="#000000" stopOpacity="0.38" />
+            <stop offset="85%" stopColor="#000000" stopOpacity="0.55" />
+            <stop offset="90%" stopColor="#000000" stopOpacity="0.72" />
+            <stop offset="94%" stopColor="#000000" stopOpacity="0.87" />
+            <stop offset="97%" stopColor="#000000" stopOpacity="0.95" />
+            <stop offset="100%" stopColor="#000000" stopOpacity="1" />
           </linearGradient>
         </defs>
         <rect width="1" height="1" fill="url(#hero-bottom-fade)" />

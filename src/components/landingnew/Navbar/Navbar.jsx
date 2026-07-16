@@ -182,7 +182,7 @@ const Navbar = ({ showDocs }) => {
           {/* Active Users Telemetry Dot */}
           <div className="active-users-badge" title="Live active users connected">
             <span className="pulsing-dot" />
-            <span>🟢 {activeUsers} Active</span>
+            <span>{activeUsers} Active</span>
           </div>
 
           {showDocs && (

@@ -4,7 +4,7 @@ import { useAuth } from '../components/context/AuthContext/AuthContext';
 import Navbar from '../components/landingnew/Navbar/Navbar';
 import Footer from '../components/landingnew/Footer/Footer';
 import { toast } from 'sonner';
-import { LuUsers, LuTrendingUp, LuDownload, LuShieldAlert, LuCreditCard, LuLayers } from 'react-icons/lu';
+import { LuUsers, LuTrendingUp, LuDownload, LuCreditCard, LuLayers } from 'react-icons/lu';
 
 export default function AdminDashboard() {
   const { user, loading: authLoading } = useAuth();
@@ -42,18 +42,18 @@ export default function AdminDashboard() {
 
   if (authLoading || !user || user.role !== 'admin') {
     return (
-      <div style={{ background: '#0b0f19', color: '#fff', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p>Loading Admin Dashboard...</p>
+      <div style={{ background: 'var(--bg-body)', color: 'var(--text-primary)', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 500 }}>Loading Admin Dashboard...</p>
       </div>
     );
   }
 
   if (loadingStats || !stats) {
     return (
-      <div style={{ background: '#0b0f19', color: '#fff', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ background: 'var(--bg-body)', color: 'var(--text-primary)', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
         <Navbar />
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <p>Loading SaaS telemetry charts...</p>
+          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 500 }}>Loading SaaS telemetry charts...</p>
         </div>
         <Footer />
       </div>
@@ -61,99 +61,103 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div style={{ background: '#0b0f19', color: '#fff', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ background: 'var(--bg-gradient-dark)', color: 'var(--text-primary)', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar />
 
-      <main style={{ flex: 1, maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '120px 24px 60px' }}>
+      <main style={{ flex: 1, maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '120px 24px 60px' }} className="animate-slide-up">
         
         {/* Page title */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '40px' }}>
-          <div style={{ background: 'rgba(99, 102, 241, 0.1)', color: '#6366f1', padding: '10px', borderRadius: '12px', display: 'flex', alignItems: 'center' }}>
-            <LuLayers size={24} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '32px' }}>
+          <div style={{ background: 'rgba(99, 102, 241, 0.08)', color: 'var(--color-primary)', padding: '10px', borderRadius: '10px', border: '1px solid rgba(99, 102, 241, 0.15)', display: 'flex', alignItems: 'center' }}>
+            <LuLayers size={22} />
           </div>
           <div>
-            <h2 style={{ fontSize: '28px', fontWeight: 800, margin: 0 }}>SaaS Admin Telemetry</h2>
-            <p style={{ color: '#64748b', fontSize: '14px', margin: '4px 0 0 0' }}>Real-time revenue, users growth, and telemetry downloads.</p>
+            <h2 style={{ fontSize: '22px', fontWeight: 700, margin: 0, fontFamily: 'var(--font-display)', letterSpacing: '-0.02em' }}>SaaS Admin Telemetry</h2>
+            <p style={{ color: 'var(--text-dimmed)', fontSize: '13px', margin: '4px 0 0 0', fontFamily: 'var(--font-sans)' }}>Real-time revenue, users growth, and telemetry downloads.</p>
           </div>
         </div>
 
         {/* Dashboard Cards Metrics */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '40px' }} className="admin-cards-grid">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '32px' }} className="admin-cards-grid">
           
           {/* Card: Users */}
           <div style={{
-            background: 'rgba(17, 24, 39, 0.45)',
-            border: '1px solid rgba(255, 255, 255, 0.05)',
-            borderRadius: '20px',
-            padding: '24px',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+            background: 'var(--glass-bg-dark)',
+            backdropFilter: 'blur(16px)',
+            border: '1px solid var(--glass-border-dark)',
+            borderRadius: '12px',
+            padding: '16px 20px',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between'
-          }}>
+            justifyContent: 'space-between',
+            transition: 'all 0.3s ease'
+          }} className="glass-panel">
             <div>
-              <span style={{ fontSize: '13px', color: '#64748b', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Total Users</span>
-              <h3 style={{ fontSize: '32px', fontWeight: 800, color: '#fff', margin: '8px 0 0 0' }}>{stats.totalUsers}</h3>
+              <span style={{ fontSize: '12px', color: 'var(--text-dimmed)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Total Users</span>
+              <h3 style={{ fontSize: '28px', fontWeight: 800, color: 'var(--text-primary)', margin: '4px 0 0 0', fontFamily: 'var(--font-display)' }}>{stats.totalUsers}</h3>
             </div>
-            <div style={{ background: 'rgba(99, 102, 241, 0.1)', color: '#6366f1', padding: '12px', borderRadius: '14px' }}>
-              <LuUsers size={22} />
+            <div style={{ background: 'rgba(99, 102, 241, 0.08)', color: 'var(--color-primary)', padding: '10px', borderRadius: '8px', border: '1px solid rgba(99, 102, 241, 0.12)' }}>
+              <LuUsers size={20} />
             </div>
           </div>
 
           {/* Card: Revenue */}
           <div style={{
-            background: 'rgba(17, 24, 39, 0.45)',
-            border: '1px solid rgba(255, 255, 255, 0.05)',
-            borderRadius: '20px',
-            padding: '24px',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+            background: 'var(--glass-bg-dark)',
+            backdropFilter: 'blur(16px)',
+            border: '1px solid var(--glass-border-dark)',
+            borderRadius: '12px',
+            padding: '16px 20px',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between'
-          }}>
+            justifyContent: 'space-between',
+            transition: 'all 0.3s ease'
+          }} className="glass-panel">
             <div>
-              <span style={{ fontSize: '13px', color: '#64748b', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Total Revenue</span>
-              <h3 style={{ fontSize: '32px', fontWeight: 800, color: '#10b981', margin: '8px 0 0 0' }}>₹ {stats.totalRevenue}</h3>
+              <span style={{ fontSize: '12px', color: 'var(--text-dimmed)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Total Revenue</span>
+              <h3 style={{ fontSize: '28px', fontWeight: 800, color: '#10b981', margin: '4px 0 0 0', fontFamily: 'var(--font-display)' }}>₹ {stats.totalRevenue}</h3>
             </div>
-            <div style={{ background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', padding: '12px', borderRadius: '14px' }}>
-              <LuTrendingUp size={22} />
+            <div style={{ background: 'rgba(16, 185, 129, 0.08)', color: '#10b981', padding: '10px', borderRadius: '8px', border: '1px solid rgba(16, 185, 129, 0.12)' }}>
+              <LuTrendingUp size={20} />
             </div>
           </div>
 
           {/* Card: Downloads */}
           <div style={{
-            background: 'rgba(17, 24, 39, 0.45)',
-            border: '1px solid rgba(255, 255, 255, 0.05)',
-            borderRadius: '20px',
-            padding: '24px',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+            background: 'var(--glass-bg-dark)',
+            backdropFilter: 'blur(16px)',
+            border: '1px solid var(--glass-border-dark)',
+            borderRadius: '12px',
+            padding: '16px 20px',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between'
-          }}>
+            justifyContent: 'space-between',
+            transition: 'all 0.3s ease'
+          }} className="glass-panel">
             <div>
-              <span style={{ fontSize: '13px', color: '#64748b', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Component Downloads</span>
-              <h3 style={{ fontSize: '32px', fontWeight: 800, color: '#fff', margin: '8px 0 0 0' }}>{stats.totalDownloads}</h3>
+              <span style={{ fontSize: '12px', color: 'var(--text-dimmed)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Component Downloads</span>
+              <h3 style={{ fontSize: '28px', fontWeight: 800, color: 'var(--text-primary)', margin: '4px 0 0 0', fontFamily: 'var(--font-display)' }}>{stats.totalDownloads}</h3>
             </div>
-            <div style={{ background: 'rgba(255, 255, 255, 0.03)', color: '#fff', padding: '12px', borderRadius: '14px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
-              <LuDownload size={22} />
+            <div style={{ background: 'rgba(255, 255, 255, 0.03)', color: 'var(--text-primary)', padding: '10px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+              <LuDownload size={20} />
             </div>
           </div>
 
         </div>
 
         {/* Charts & Graphs (Sleek Visual Renderers) */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '30px', marginBottom: '40px' }} className="admin-charts-grid">
+        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '24px', marginBottom: '32px' }} className="admin-charts-grid">
           
           {/* Revenue and Plan distribution */}
           <div style={{
-            background: 'rgba(17, 24, 39, 0.45)',
-            border: '1px solid rgba(255, 255, 255, 0.05)',
-            borderRadius: '24px',
-            padding: '30px',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
-          }}>
-            <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '24px' }}>Active Subscriptions Plan Distribution</h3>
+            background: 'var(--glass-bg-dark)',
+            backdropFilter: 'blur(16px)',
+            border: '1px solid var(--glass-border-dark)',
+            borderRadius: '12px',
+            padding: '24px',
+            transition: 'all 0.3s ease'
+          }} className="glass-panel">
+            <h3 style={{ fontSize: '15px', fontWeight: 600, marginBottom: '20px', fontFamily: 'var(--font-display)' }}>Active Subscriptions Plan Distribution</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {stats.planStats.map(stat => {
                 const totalSubs = stats.planStats.reduce((acc, curr) => acc + curr.count, 0) || 1;
@@ -162,11 +166,11 @@ export default function AdminDashboard() {
                 
                 return (
                   <div key={stat.plan}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', marginBottom: '6px' }}>
-                      <span style={{ textTransform: 'capitalize', fontWeight: 600 }}>{stat.plan} ({stat.count} users)</span>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '6px', fontFamily: 'var(--font-sans)' }}>
+                      <span style={{ textTransform: 'capitalize', fontWeight: 500, color: 'var(--text-secondary)' }}>{stat.plan} ({stat.count} users)</span>
                       <strong style={{ color }}>{percentage}%</strong>
                     </div>
-                    <div style={{ width: '100%', height: '8px', background: 'rgba(255,255,255,0.03)', borderRadius: '99px', overflow: 'hidden' }}>
+                    <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.04)', borderRadius: '99px', overflow: 'hidden' }}>
                       <div style={{ width: `${percentage}%`, height: '100%', background: color, borderRadius: '99px' }} />
                     </div>
                   </div>
@@ -177,13 +181,14 @@ export default function AdminDashboard() {
 
           {/* Component telemetry statistics */}
           <div style={{
-            background: 'rgba(17, 24, 39, 0.45)',
-            border: '1px solid rgba(255, 255, 255, 0.05)',
-            borderRadius: '24px',
-            padding: '30px',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
-          }}>
-            <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '24px' }}>Most Downloaded Components</h3>
+            background: 'var(--glass-bg-dark)',
+            backdropFilter: 'blur(16px)',
+            border: '1px solid var(--glass-border-dark)',
+            borderRadius: '12px',
+            padding: '24px',
+            transition: 'all 0.3s ease'
+          }} className="glass-panel">
+            <h3 style={{ fontSize: '15px', fontWeight: 600, marginBottom: '20px', fontFamily: 'var(--font-display)' }}>Most Downloaded Components</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {stats.popularComponents.map((comp, idx) => {
                 const maxVal = stats.popularComponents[0]?.count || 1;
@@ -191,11 +196,11 @@ export default function AdminDashboard() {
                 
                 return (
                   <div key={idx}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', marginBottom: '6px' }}>
-                      <span>{comp.component_name}</span>
-                      <strong>{comp.count} times</strong>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '6px', fontFamily: 'var(--font-sans)' }}>
+                      <span style={{ color: 'var(--text-secondary)' }}>{comp.component_name}</span>
+                      <strong style={{ color: 'var(--color-accent)' }}>{comp.count} times</strong>
                     </div>
-                    <div style={{ width: '100%', height: '8px', background: 'rgba(255,255,255,0.03)', borderRadius: '99px', overflow: 'hidden' }}>
+                    <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.04)', borderRadius: '99px', overflow: 'hidden' }}>
                       <div style={{ width: `${percentage}%`, height: '100%', background: 'linear-gradient(to right, #6366f1, #a855f7)', borderRadius: '99px' }} />
                     </div>
                   </div>
@@ -207,42 +212,60 @@ export default function AdminDashboard() {
         </div>
 
         {/* User registers & payments list tables */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '30px' }} className="admin-tables-grid">
+        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '24px' }} className="admin-tables-grid">
           
           {/* Recent Payments */}
           <div style={{
-            background: 'rgba(17, 24, 39, 0.45)',
-            border: '1px solid rgba(255, 255, 255, 0.05)',
-            borderRadius: '24px',
-            padding: '30px',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
-            overflow: 'hidden'
-          }}>
-            <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <LuCreditCard size={18} /> Recent Purchases
+            background: 'var(--glass-bg-dark)',
+            backdropFilter: 'blur(16px)',
+            border: '1px solid var(--glass-border-dark)',
+            borderRadius: '12px',
+            padding: '24px',
+            overflow: 'hidden',
+            transition: 'all 0.3s ease'
+          }} className="glass-panel">
+            <h3 style={{ fontSize: '15px', fontWeight: 600, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px', fontFamily: 'var(--font-display)' }}>
+              <LuCreditCard size={16} /> Recent Purchases
             </h3>
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', textAlign: 'left' }}>
+            <div style={{ overflowX: 'auto', border: '1px solid var(--border-secondary)', borderRadius: '8px' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', textAlign: 'left', background: 'rgba(255, 255, 255, 0.01)' }}>
                 <thead>
-                  <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                    <th style={{ padding: '10px 6px', color: '#64748b' }}>Customer</th>
-                    <th style={{ padding: '10px 6px', color: '#64748b' }}>Plan</th>
-                    <th style={{ padding: '10px 6px', color: '#64748b' }}>Amount</th>
-                    <th style={{ padding: '10px 6px', color: '#64748b' }}>Date</th>
+                  <tr style={{ borderBottom: '1px solid var(--border-secondary)', background: 'rgba(255, 255, 255, 0.02)' }}>
+                    <th style={{ padding: '8px 12px', color: 'var(--text-muted)', fontSize: '12px', fontWeight: 700 }}>Customer</th>
+                    <th style={{ padding: '8px 12px', color: 'var(--text-muted)', fontSize: '12px', fontWeight: 700 }}>Plan</th>
+                    <th style={{ padding: '8px 12px', color: 'var(--text-muted)', fontSize: '12px', fontWeight: 700 }}>Amount</th>
+                    <th style={{ padding: '8px 12px', color: 'var(--text-muted)', fontSize: '12px', fontWeight: 700 }}>Date</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {stats.recentPayments.map((pay, idx) => (
-                    <tr key={idx} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                      <td style={{ padding: '12px 6px' }}>
-                        <div style={{ fontWeight: 600 }}>{pay.username}</div>
-                        <div style={{ fontSize: '11px', color: '#64748b' }}>{pay.email}</div>
-                      </td>
-                      <td style={{ padding: '12px 6px', textTransform: 'uppercase', fontWeight: 700, fontSize: '11px' }}>{pay.plan}</td>
-                      <td style={{ padding: '12px 6px', color: '#10b981', fontWeight: 600 }}>INR {pay.amount}</td>
-                      <td style={{ padding: '12px 6px', color: '#94a3b8' }}>{new Date(pay.created_at).toLocaleDateString()}</td>
-                    </tr>
-                  ))}
+                  {stats.recentPayments.map((pay, idx) => {
+                    const planColor = { silver: '#94a3b8', gold: '#eab308', diamond: '#ec4899' }[pay.plan] || '#fff';
+                    return (
+                      <tr key={idx} style={{ borderBottom: idx === stats.recentPayments.length - 1 ? 'none' : '1px solid var(--border-subtle)' }}>
+                        <td style={{ padding: '10px 12px' }}>
+                          <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{pay.username}</div>
+                          <div style={{ fontSize: '11px', color: 'var(--text-dimmed)' }}>{pay.email}</div>
+                        </td>
+                        <td style={{ padding: '10px 12px' }}>
+                          <span style={{
+                            display: 'inline-block',
+                            textTransform: 'uppercase',
+                            fontWeight: 700,
+                            fontSize: '9px',
+                            color: planColor,
+                            background: `rgba(${pay.plan === 'gold' ? '234, 179, 8' : pay.plan === 'diamond' ? '236, 72, 153' : '148, 163, 184'}, 0.08)`,
+                            border: `1px solid rgba(${pay.plan === 'gold' ? '234, 179, 8' : pay.plan === 'diamond' ? '236, 72, 153' : '148, 163, 184'}, 0.2)`,
+                            padding: '2px 8px',
+                            borderRadius: '9999px'
+                          }}>
+                            {pay.plan}
+                          </span>
+                        </td>
+                        <td style={{ padding: '10px 12px', color: '#10b981', fontWeight: 600 }}>₹{pay.amount}</td>
+                        <td style={{ padding: '10px 12px', color: 'var(--text-muted)' }}>{new Date(pay.created_at).toLocaleDateString()}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -250,32 +273,33 @@ export default function AdminDashboard() {
 
           {/* Recent Registrations */}
           <div style={{
-            background: 'rgba(17, 24, 39, 0.45)',
-            border: '1px solid rgba(255, 255, 255, 0.05)',
-            borderRadius: '24px',
-            padding: '30px',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
-            overflow: 'hidden'
-          }}>
-            <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <LuUsers size={18} /> New User Registrations
+            background: 'var(--glass-bg-dark)',
+            backdropFilter: 'blur(16px)',
+            border: '1px solid var(--glass-border-dark)',
+            borderRadius: '12px',
+            padding: '24px',
+            overflow: 'hidden',
+            transition: 'all 0.3s ease'
+          }} className="glass-panel">
+            <h3 style={{ fontSize: '15px', fontWeight: 600, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px', fontFamily: 'var(--font-display)' }}>
+              <LuUsers size={16} /> New User Registrations
             </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {stats.recentUsers.map((u, idx) => (
                 <div key={idx} style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '12px',
+                  padding: '10px 12px',
                   background: 'rgba(255,255,255,0.01)',
-                  borderRadius: '12px',
-                  border: '1px solid rgba(255,255,255,0.03)'
+                  borderRadius: '8px',
+                  border: '1px solid var(--border-subtle)'
                 }}>
                   <div>
-                    <strong style={{ color: '#fff', fontSize: '14px' }}>{u.username}</strong>
-                    <span style={{ fontSize: '12px', color: '#64748b', display: 'block' }}>{u.email}</span>
+                    <strong style={{ color: 'var(--text-primary)', fontSize: '13px', fontWeight: 600 }}>{u.username}</strong>
+                    <span style={{ fontSize: '11px', color: 'var(--text-dimmed)', display: 'block' }}>{u.email}</span>
                   </div>
-                  <span style={{ fontSize: '12px', color: '#94a3b8' }}>
+                  <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
                     {new Date(u.created_at).toLocaleDateString()}
                   </span>
                 </div>

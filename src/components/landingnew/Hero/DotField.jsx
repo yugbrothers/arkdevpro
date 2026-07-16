@@ -267,8 +267,8 @@ const DotField = memo(({
       >
         <defs>
           <radialGradient id="dot-field-glow">
-            <stop offset="0%" stopColor="#120F17" />
-            <stop offset="100%" stopColor="#120F1700" />
+            <stop offset="0%" stopColor="#000000" />
+            <stop offset="100%" stopColor="#00000000" />
           </radialGradient>
         </defs>
         <circle

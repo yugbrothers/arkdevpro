@@ -108,7 +108,7 @@
   transform: translate(-50%, -50%);
   aspect-ratio: 1;
   height: 1200px;
-  background: radial-gradient(circle, rgba(6, 0, 16, 0.6) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -117,8 +117,8 @@
   align-items: center;
   gap: 0.8rem;
   border: 1px solid var(--border-subtle);
-  background: rgba(6, 0, 16, 0.8);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  background: rgba(0, 0, 0, 0.85);
+  box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.15);
   /* backdrop-filter removed for performance */
   padding: 0.6em 0.8em 0.6em 0.6em;
   border-radius: 50px;
@@ -153,9 +153,9 @@
 
 .hero-new-badge-container:hover {
   box-shadow:
-    0 0 60px rgba(124, 58, 237, 0.2),
-    0 0 120px rgba(139, 92, 246, 0.2),
-    0 0 180px rgba(109, 40, 217, 0.2),
+    0 0 60px rgba(99, 102, 241, 0.2),
+    0 0 120px rgba(129, 140, 248, 0.2),
+    0 0 180px rgba(79, 70, 229, 0.2),
     0 12px 40px rgba(0, 0, 0, 0.4);
   transform: scale(1.01);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -183,8 +183,8 @@
   isolation: isolate;
   z-index: 15;
   box-shadow:
-    0 0 40px rgba(124, 58, 237, 0.2),
-    0 0 80px rgba(139, 92, 246, 0.1),
+    0 0 40px rgba(99, 102, 241, 0.2),
+    0 0 80px rgba(129, 140, 248, 0.1),
     0 8px 32px rgba(0, 0, 0, 0.1);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   /* glow-pulse animation removed for performance - filter animations are expensive */
@@ -204,7 +204,7 @@
   height: 38px;
   background: rgba(255, 255, 255, 0.9);
   border-radius: 50%;
-  color: #4c1d95;
+  color: #6366f1;
   transition: all 0.3s ease;
   /* backdrop-filter removed for performance */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -261,9 +261,9 @@
 
 .landing-button:hover {
   box-shadow:
-    0 0 60px rgba(124, 58, 237, 0.2),
-    0 0 120px rgba(139, 92, 246, 0.2),
-    0 0 180px rgba(109, 40, 217, 0.2),
+    0 0 60px rgba(99, 102, 241, 0.2),
+    0 0 120px rgba(129, 140, 248, 0.2),
+    0 0 180px rgba(79, 70, 229, 0.2),
     0 12px 40px rgba(0, 0, 0, 0.4),
     inset 0 2px 0 rgba(255, 255, 255, 0.4),
     inset 0 -2px 0 rgba(0, 0, 0, 0.3);

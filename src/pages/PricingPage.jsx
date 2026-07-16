@@ -65,17 +65,17 @@ export default function PricingPage() {
   ];
 
   return (
-    <div style={{ background: '#0b0f19', color: '#fff', minHeight: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+    <div style={{ background: 'var(--bg-gradient-dark)', color: 'var(--text-primary)', minHeight: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       <Navbar />
 
-      <main style={{ flex: 1, maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '120px 24px 80px', position: 'relative' }}>
+      <main style={{ flex: 1, maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '120px 24px 80px', position: 'relative' }} className="animate-slide-up">
         
         {/* Background ambient lighting */}
         <div style={{
           position: 'absolute',
           width: '500px',
           height: '500px',
-          background: 'radial-gradient(circle, rgba(236,72,153,0.1) 0%, rgba(0,0,0,0) 70%)',
+          background: 'radial-gradient(circle, rgba(236,72,153,0.08) 0%, rgba(0,0,0,0) 70%)',
           top: '30%',
           right: '-10%',
           zIndex: 0,
@@ -84,17 +84,19 @@ export default function PricingPage() {
 
         <div style={{ textAlign: 'center', marginBottom: '60px', zIndex: 1, position: 'relative' }}>
           <h2 style={{
-            fontSize: 'clamp(32px, 5vw, 54px)',
-            fontWeight: 800,
+            fontSize: 'clamp(32px, 5vw, 44px)',
+            fontWeight: 700,
             lineHeight: 1.1,
             marginBottom: '15px',
-            background: 'linear-gradient(to right, #fff, #94a3b8)',
+            fontFamily: 'var(--font-display)',
+            letterSpacing: '-0.02em',
+            background: 'linear-gradient(to right, #ffffff, #94a3b8)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
           }}>
             Lifetime Pricing Plans
           </h2>
-          <p style={{ color: '#94a3b8', fontSize: '17px', maxWidth: '600px', margin: '0 auto' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '15px', maxWidth: '600px', margin: '0 auto', fontFamily: 'var(--font-sans)', lineHeight: 1.6 }}>
             No subscriptions. Pay once, use forever. Scale your UI projects with zero monthly commitments.
           </p>
         </div>
@@ -113,69 +115,70 @@ export default function PricingPage() {
             <div 
               key={plan.id}
               style={{
-                background: 'rgba(17, 24, 39, 0.45)',
-                backdropFilter: 'blur(24px) saturate(1.2)',
-                border: plan.popular ? '2px solid #ec4899' : '1px solid rgba(255, 255, 255, 0.05)',
-                borderRadius: '24px',
-                padding: '40px 30px',
+                background: 'var(--glass-bg-dark)',
+                backdropFilter: 'blur(16px)',
+                border: plan.popular ? '2px solid #ec4899' : '1px solid var(--glass-border-dark)',
+                borderRadius: 'var(--radius-md)',
+                padding: '36px 28px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 position: 'relative',
                 boxShadow: plan.popular 
-                  ? '0 25px 60px -10px rgba(236, 72, 153, 0.25), 0 0 40px rgba(236,72,153,0.1)' 
-                  : '0 20px 40px rgba(0,0,0,0.4)',
-                transform: plan.popular ? 'scale(1.03)' : 'none',
+                  ? '0 20px 40px rgba(236, 72, 153, 0.15), 0 0 30px rgba(236,72,153,0.08)' 
+                  : '0 15px 30px rgba(0,0,0,0.3)',
+                transform: plan.popular ? 'scale(1.02)' : 'none',
                 transition: 'all 0.3s ease'
               }}
-              className={`pricing-card ${plan.popular ? 'popular-glow-card' : ''}`}
+              className={`pricing-card glass-panel ${plan.popular ? 'popular-glow-card' : ''}`}
             >
               {plan.popular && (
                 <div style={{
                   position: 'absolute',
-                  top: '-15px',
+                  top: '-13px',
                   left: '50%',
                   transform: 'translateX(-50%)',
                   background: 'linear-gradient(to right, #ec4899, #a855f7)',
                   color: '#fff',
-                  fontSize: '11px',
+                  fontSize: '10px',
                   fontWeight: 800,
                   textTransform: 'uppercase',
                   letterSpacing: '0.08em',
-                  padding: '6px 16px',
+                  padding: '4px 14px',
                   borderRadius: '9999px',
-                  boxShadow: '0 4px 15px rgba(236,72,153,0.4)'
+                  boxShadow: '0 4px 12px rgba(236,72,153,0.3)',
+                  fontFamily: 'var(--font-sans)'
                 }}>
                   Most Popular Plan
                 </div>
               )}
 
               <div>
-                <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#fff', marginBottom: '8px' }}>{plan.name}</h3>
+                <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#fff', marginBottom: '8px', fontFamily: 'var(--font-display)' }}>{plan.name}</h3>
                 
-                <div style={{ display: 'flex', alignItems: 'baseline', margin: '20px 0' }}>
-                  <span style={{ fontSize: '22px', fontWeight: 600, color: '#94a3b8', marginRight: '4px' }}>₹</span>
-                  <span style={{ fontSize: '48px', fontWeight: 800, color: '#fff', letterSpacing: '-1px' }}>{plan.price}</span>
-                  <span style={{ fontSize: '13px', color: '#64748b', marginLeft: '6px', fontWeight: 500 }}>One-time pay</span>
+                <div style={{ display: 'flex', alignItems: 'baseline', margin: '20px 0', fontFamily: 'var(--font-sans)' }}>
+                  <span style={{ fontSize: '20px', fontWeight: 600, color: 'var(--text-dimmed)', marginRight: '4px' }}>₹</span>
+                  <span style={{ fontSize: '42px', fontWeight: 800, color: '#fff', letterSpacing: '-1px' }}>{plan.price}</span>
+                  <span style={{ fontSize: '12px', color: 'var(--text-dimmed)', marginLeft: '6px', fontWeight: 500 }}>One-time pay</span>
                 </div>
 
-                <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)', margin: '20px 0' }} />
+                <div style={{ height: '1px', background: 'var(--border-subtle)', margin: '20px 0' }} />
 
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   {plan.features.map((feat, idx) => (
-                    <li key={idx} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px', color: '#e2e8f0' }}>
+                    <li key={idx} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', color: 'var(--text-secondary)', fontFamily: 'var(--font-sans)' }}>
                       <span style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        width: '18px',
-                        height: '18px',
+                        width: '16px',
+                        height: '16px',
                         borderRadius: '50%',
-                        background: plan.popular ? 'rgba(236,72,153,0.1)' : 'rgba(255,255,255,0.03)',
-                        color: plan.popular ? '#ec4899' : '#94a3b8',
-                        border: plan.popular ? '1px solid rgba(236,72,153,0.2)' : '1px solid rgba(255,255,255,0.08)'
+                        background: plan.popular ? 'rgba(236,72,153,0.08)' : 'rgba(255,255,255,0.02)',
+                        color: plan.popular ? '#ec4899' : 'var(--text-muted)',
+                        border: plan.popular ? '1px solid rgba(236,72,153,0.15)' : '1px solid var(--border-primary)'
                       }}>
-                        <LuCheck size={12} />
+                        <LuCheck size={10} />
                       </span>
                       {feat}
                     </li>
@@ -184,17 +187,18 @@ export default function PricingPage() {
               </div>
 
               {plan.popular ? (
-                <ElectricBorder color="#ec4899" speed={1.2} chaos={0.08} borderRadius={12} style={{ marginTop: '35px', width: '100%' }}>
+                <ElectricBorder color="#ec4899" speed={1.2} chaos={0.08} borderRadius={6} style={{ marginTop: '30px', width: '100%' }}>
                   <button
                     onClick={() => handleSelectPlan(plan.id)}
                     style={{
                       background: 'transparent',
                       color: '#fff',
                       border: 'none',
-                      padding: '14px',
+                      padding: '10px 14px',
                       width: '100%',
                       fontWeight: 600,
-                      fontSize: '14px',
+                      fontSize: '13px',
+                      fontFamily: 'var(--font-sans)',
                       cursor: 'pointer',
                       display: 'flex',
                       alignItems: 'center',
@@ -203,23 +207,24 @@ export default function PricingPage() {
                       transition: 'all 0.2s'
                     }}
                   >
-                    Choose {plan.name} <LuArrowRight size={15} />
+                    Choose {plan.name} <LuArrowRight size={13} />
                   </button>
                 </ElectricBorder>
               ) : (
                 <button
                   onClick={() => handleSelectPlan(plan.id)}
                   style={{
-                    background: 'rgba(255,255,255,0.03)',
+                    background: 'rgba(255,255,255,0.02)',
                     color: '#fff',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    borderRadius: '12px',
-                    padding: '14px',
+                    border: '1px solid var(--border-primary)',
+                    borderRadius: 'var(--radius-sm)',
+                    padding: '10px 14px',
                     width: '100%',
                     fontWeight: 600,
-                    fontSize: '14px',
+                    fontSize: '13px',
+                    fontFamily: 'var(--font-sans)',
                     cursor: 'pointer',
-                    marginTop: '35px',
+                    marginTop: '30px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -228,7 +233,7 @@ export default function PricingPage() {
                   }}
                   className="plan-select-btn"
                 >
-                  Choose {plan.name} <LuArrowRight size={15} />
+                  Choose {plan.name} <LuArrowRight size={13} />
                 </button>
               )}
             </div>
@@ -256,16 +261,16 @@ export default function PricingPage() {
         }
         .pricing-card:hover {
           border-color: rgba(255, 255, 255, 0.12) !important;
-          transform: translateY(-4px) !important;
+          transform: translateY(-2px) !important;
         }
         .popular-glow-card:hover {
           border-color: #ec4899 !important;
-          box-shadow: 0 30px 70px -10px rgba(236, 72, 153, 0.35), 0 0 50px rgba(236,72,153,0.15) !important;
+          box-shadow: 0 25px 50px rgba(236, 72, 153, 0.25), 0 0 40px rgba(236,72,153,0.12) !important;
         }
         .plan-select-btn:hover {
-          background: ${plans[2].color};
-          border-color: transparent !important;
-          box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
+          background: rgba(255, 255, 255, 0.05) !important;
+          border-color: var(--color-primary) !important;
+          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
         }
       `}</style>
     </div>

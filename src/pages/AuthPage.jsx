@@ -58,20 +58,20 @@ export default function AuthPage() {
 
   return (
     <div style={{
-      background: '#0b0f19',
-      color: '#fff',
+      background: 'var(--bg-gradient-dark)',
+      color: 'var(--text-primary)',
       minHeight: '100vh',
       display: 'flex',
       flexDirection: 'column',
       position: 'relative',
       overflow: 'hidden'
     }}>
-      {/* Background radial glow */}
+      {/* Background radial glow matching XFINITY ERP login overlay */}
       <div style={{
         position: 'absolute',
         width: '600px',
         height: '600px',
-        background: 'radial-gradient(circle, rgba(99,102,241,0.15) 0%, rgba(0,0,0,0) 70%)',
+        background: 'radial-gradient(circle, rgba(99,102,241,0.12) 0%, rgba(0,0,0,0) 70%)',
         top: '-10%',
         left: '25%',
         zIndex: 0,
@@ -87,7 +87,7 @@ export default function AuthPage() {
         justifyContent: 'center',
         padding: '120px 24px 60px',
         zIndex: 1
-      }}>
+      }} className="animate-slide-up">
         <div style={{
           width: '100%',
           maxWidth: '1000px',
@@ -100,29 +100,32 @@ export default function AuthPage() {
           {/* Left panel: Illustration / Promo */}
           <div style={{ paddingRight: '20px' }} className="auth-left-promo">
             <h2 style={{
-              fontSize: 'clamp(28px, 4vw, 44px)',
-              fontWeight: 800,
+              fontSize: 'clamp(28px, 4vw, 40px)',
+              fontWeight: 700,
               lineHeight: 1.2,
               marginBottom: '20px',
-              background: 'linear-gradient(to right, #fff, #94a3b8)',
+              fontFamily: 'var(--font-display)',
+              letterSpacing: '-0.02em',
+              background: 'linear-gradient(to right, #ffffff, #94a3b8)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}>
               Join the future of rapid UI development.
             </h2>
-            <p style={{ color: '#94a3b8', fontSize: '16px', lineHeight: 1.6, marginBottom: '30px' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '15px', lineHeight: 1.6, marginBottom: '30px', fontFamily: 'var(--font-sans)' }}>
               Create stunning, modern, and fluid interfaces for your clients and SaaS projects. Access hundreds of modular components, assets, animations, and templates.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
               {['Vercel Integration', 'React & Tailwind', 'Lifetime Updates', '99.9% Uptime'].map(tag => (
                 <span key={tag} style={{
-                  background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.05)',
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid var(--border-secondary)',
                   padding: '6px 14px',
-                  borderRadius: '8px',
-                  fontSize: '13px',
-                  color: '#e2e8f0',
-                  fontWeight: 500
+                  borderRadius: 'var(--radius-sm)',
+                  fontSize: '12px',
+                  color: 'var(--text-secondary)',
+                  fontWeight: 500,
+                  fontFamily: 'var(--font-sans)'
                 }}>
                   {tag}
                 </span>
@@ -130,24 +133,24 @@ export default function AuthPage() {
             </div>
           </div>
 
-          {/* Right panel: Login card */}
+          {/* Right panel: Login card styled as ERP glass panel */}
           <div style={{
-            background: 'rgba(17, 24, 39, 0.45)',
-            backdropFilter: 'blur(24px) saturate(1.2)',
-            border: '1px solid rgba(255, 255, 255, 0.05)',
-            borderRadius: '24px',
-            padding: '40px 32px',
-            boxShadow: '0 20px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)'
-          }}>
-            <h3 style={{ fontSize: '22px', fontWeight: 700, marginBottom: '6px', textAlign: 'center' }}>
+            background: 'var(--glass-bg-dark)',
+            backdropFilter: 'blur(16px)',
+            border: '1px solid var(--glass-border-dark)',
+            borderRadius: 'var(--radius-md)',
+            padding: '32px 28px',
+            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4)'
+          }} className="glass-panel">
+            <h3 style={{ fontSize: '20px', fontWeight: 700, marginBottom: '6px', textAlign: 'center', fontFamily: 'var(--font-display)', letterSpacing: '-0.01em' }}>
               Sign In to ArkDev Pro
             </h3>
-            <p style={{ color: '#64748b', fontSize: '14px', textAlign: 'center', marginBottom: '30px' }}>
+            <p style={{ color: 'var(--text-dimmed)', fontSize: '13px', textAlign: 'center', marginBottom: '24px', fontFamily: 'var(--font-sans)' }}>
               Authenticate securely using your git or social providers.
             </p>
 
             {/* OAuth Buttons Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '24px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
               <button 
                 onClick={() => handleOAuthClick('github')}
                 disabled={loading}
@@ -156,19 +159,20 @@ export default function AuthPage() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
-                  background: '#111827',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  padding: '10px',
-                  borderRadius: '10px',
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  border: '1px solid var(--border-primary)',
+                  padding: '8px 10px',
+                  borderRadius: 'var(--radius-sm)',
                   color: '#fff',
                   cursor: 'pointer',
-                  fontSize: '14px',
+                  fontSize: '13px',
                   fontWeight: 600,
-                  transition: 'background 0.2s'
+                  fontFamily: 'var(--font-sans)',
+                  transition: 'all 0.2s'
                 }}
                 className="oauth-btn"
               >
-                <FaGithub size={18} /> GitHub
+                <FaGithub size={16} /> GitHub
               </button>
               
               <button 
@@ -179,19 +183,20 @@ export default function AuthPage() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
-                  background: '#111827',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  padding: '10px',
-                  borderRadius: '10px',
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  border: '1px solid var(--border-primary)',
+                  padding: '8px 10px',
+                  borderRadius: 'var(--radius-sm)',
                   color: '#fff',
                   cursor: 'pointer',
-                  fontSize: '14px',
+                  fontSize: '13px',
                   fontWeight: 600,
-                  transition: 'background 0.2s'
+                  fontFamily: 'var(--font-sans)',
+                  transition: 'all 0.2s'
                 }}
                 className="oauth-btn"
               >
-                <FaGitlab size={18} color="#fc6d26" /> GitLab
+                <FaGitlab size={16} color="#fc6d26" /> GitLab
               </button>
 
               <button 
@@ -202,19 +207,20 @@ export default function AuthPage() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
-                  background: '#111827',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  padding: '10px',
-                  borderRadius: '10px',
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  border: '1px solid var(--border-primary)',
+                  padding: '8px 10px',
+                  borderRadius: 'var(--radius-sm)',
                   color: '#fff',
                   cursor: 'pointer',
-                  fontSize: '14px',
+                  fontSize: '13px',
                   fontWeight: 600,
-                  transition: 'background 0.2s'
+                  fontFamily: 'var(--font-sans)',
+                  transition: 'all 0.2s'
                 }}
                 className="oauth-btn"
               >
-                <FaBitbucket size={18} color="#0052cc" /> Bitbucket
+                <FaBitbucket size={16} color="#0052cc" /> Bitbucket
               </button>
 
               <button 
@@ -225,66 +231,73 @@ export default function AuthPage() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
-                  background: '#111827',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  padding: '10px',
-                  borderRadius: '10px',
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  border: '1px solid var(--border-primary)',
+                  padding: '8px 10px',
+                  borderRadius: 'var(--radius-sm)',
                   color: '#fff',
                   cursor: 'pointer',
-                  fontSize: '14px',
+                  fontSize: '13px',
                   fontWeight: 600,
-                  transition: 'background 0.2s'
+                  fontFamily: 'var(--font-sans)',
+                  transition: 'all 0.2s'
                 }}
                 className="oauth-btn"
               >
-                <FaReddit size={18} color="#ff4500" /> Reddit
+                <FaReddit size={16} color="#ff4500" /> Reddit
               </button>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '20px 0', color: '#64748b' }}>
-              <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.08)' }} />
-              <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Developer Testing Bypass</span>
-              <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.08)' }} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '16px 0', color: 'var(--text-dimmed)' }}>
+              <div style={{ flex: 1, height: '1px', background: 'var(--border-secondary)' }} />
+              <span style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600, fontFamily: 'var(--font-sans)' }}>Developer Bypass</span>
+              <div style={{ flex: 1, height: '1px', background: 'var(--border-secondary)' }} />
             </div>
 
             {/* Developer Testing Bypass Panel */}
             {showDeveloperBypass && (
-              <form onSubmit={handleBypassSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <form onSubmit={handleBypassSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', color: '#94a3b8', marginBottom: '6px' }}>Test Username</label>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '6px', fontFamily: 'var(--font-sans)', textTransform: 'uppercase', letterSpacing: '0.02em' }}>Test Username</label>
                   <input 
                     type="text" 
                     value={devName} 
                     onChange={e => setDevName(e.target.value)}
                     style={{
                       width: '100%',
-                      background: 'rgba(255,255,255,0.02)',
-                      border: '1px solid rgba(255,255,255,0.08)',
-                      borderRadius: '8px',
-                      padding: '10px',
+                      background: 'rgba(255,255,255,0.01)',
+                      border: '1px solid var(--border-primary)',
+                      borderRadius: 'var(--radius-sm)',
+                      padding: '8px 12px',
                       color: '#fff',
-                      fontSize: '14px',
-                      outline: 'none'
+                      fontSize: '13px',
+                      fontFamily: 'var(--font-sans)',
+                      outline: 'none',
+                      transition: 'border-color 0.2s'
                     }} 
+                    className="auth-input-field"
                   />
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', color: '#94a3b8', marginBottom: '6px' }}>Test Email</label>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '6px', fontFamily: 'var(--font-sans)', textTransform: 'uppercase', letterSpacing: '0.02em' }}>Test Email</label>
                   <input 
                     type="email" 
                     value={devEmail} 
                     onChange={e => setDevEmail(e.target.value)}
                     style={{
                       width: '100%',
-                      background: 'rgba(255,255,255,0.02)',
-                      border: '1px solid rgba(255,255,255,0.08)',
-                      borderRadius: '8px',
-                      padding: '10px',
+                      background: 'rgba(255,255,255,0.01)',
+                      border: '1px solid var(--border-primary)',
+                      borderRadius: 'var(--radius-sm)',
+                      padding: '8px 12px',
                       color: '#fff',
-                      fontSize: '14px',
-                      outline: 'none'
+                      fontSize: '13px',
+                      fontFamily: 'var(--font-sans)',
+                      outline: 'none',
+                      transition: 'border-color 0.2s'
                     }} 
+                    className="auth-input-field"
                   />
                 </div>
 
@@ -292,16 +305,20 @@ export default function AuthPage() {
                   type="submit" 
                   disabled={loading}
                   style={{
-                    background: 'linear-gradient(to right, #6366f1, #a855f7)',
+                    background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
                     color: '#fff',
-                    border: 'none',
-                    borderRadius: '8px',
-                    padding: '12px',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    borderRadius: 'var(--radius-sm)',
+                    padding: '8px 16px',
+                    fontSize: '13px',
                     fontWeight: 600,
+                    fontFamily: 'var(--font-sans)',
                     cursor: 'pointer',
                     marginTop: '8px',
-                    transition: 'opacity 0.2s'
+                    transition: 'all 0.2s',
+                    boxShadow: '0 4px 12px rgba(99, 102, 241, 0.2)'
                   }}
+                  className="auth-submit-btn"
                 >
                   {loading ? 'Authenticating...' : 'Sign In as Mock User'}
                 </button>
@@ -313,7 +330,7 @@ export default function AuthPage() {
 
       <Footer />
       
-      {/* Styles for responsive auth grid */}
+      {/* Styles for responsive auth grid and transitions */}
       <style>{`
         @media (max-width: 768px) {
           .auth-grid-responsive {
@@ -326,8 +343,18 @@ export default function AuthPage() {
           }
         }
         .oauth-btn:hover {
-          background: rgba(255,255,255,0.05) !important;
-          border-color: rgba(255,255,255,0.15) !important;
+          background: rgba(255, 255, 255, 0.05) !important;
+          border-color: var(--color-primary) !important;
+          box-shadow: 0 0 10px rgba(99, 102, 241, 0.15);
+        }
+        .auth-input-field:focus {
+          border-color: var(--color-primary) !important;
+          box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.3) !important;
+        }
+        .auth-submit-btn:hover {
+          opacity: 0.95;
+          transform: translateY(-1px);
+          box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
         }
       `}</style>
     </div>

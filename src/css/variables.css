@@ -1,37 +1,50 @@
 :root {
-  /* Background colors */
-  --bg-body: #120F17;
-  --bg-card: #1B1722;
-  --bg-elevated: #1B1722;
-  --bg-hover: #373044;
+  /* Font Families */
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Outfit', sans-serif;
+
+  /* Background colors & gradients from XFINITY ERP */
+  --bg-body: #000000;
+  --bg-card: #121212;
+  --bg-elevated: #1a1a1a;
+  --bg-hover: #222222;
+  --bg-gradient-dark: linear-gradient(135deg, #000000 0%, #121212 50%, #000000 100%);
+  --bg-gradient-light: linear-gradient(135deg, #f8fafc 0%, #eef2f6 50%, #e2e8f0 100%);
+
+  /* Glassmorphism tokens from XFINITY ERP */
+  --glass-bg-dark: rgba(0, 0, 0, 0.85);
+  --glass-bg-light: rgba(255, 255, 255, 0.7);
+  --glass-border-dark: rgba(255, 255, 255, 0.05);
+  --glass-border-light: rgba(0, 0, 0, 0.08);
 
   /* Border colors */
-  --border-primary: #2F293A;
-  --border-secondary: #2F293A;
-  --border-subtle: #2F293A;
+  --border-primary: rgba(255, 255, 255, 0.08);
+  --border-secondary: rgba(255, 255, 255, 0.05);
+  --border-subtle: rgba(255, 255, 255, 0.03);
 
   /* Brand colors */
-  --color-primary: #A855F7;
-  --color-accent: #B497CF;
-  --color-accent-muted: #B497CF;
+  --color-primary: #6366f1;
+  --color-accent: #818cf8;
+  --color-accent-muted: #4f46e5;
 
   /* Text colors */
-  --text-primary: #fff;
-  --text-secondary: #f5f5f5;
-  --text-muted: #aaaaaa;
-  --text-dimmed: #a1a1aa;
-  --text-link: #ffffff;
+  --text-primary: #ffffff;
+  --text-secondary: #f3f4f6;
+  --text-muted: #94a3b8;
+  --text-dimmed: #64748b;
+  --text-link: #6366f1;
 
-  /* Radii */
-  --radius-sm: 10px;
+  /* Radii aligned to XFINITY ERP */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 16px;
-  --radius-xl: 24px;
-  --radius-full: 50px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
 
   /* Shadows */
-  --shadow-dropdown: 0 8px 32px rgba(0, 0, 0, 0.4);
-  --shadow-primary: 0 2px 8px rgba(82, 39, 255, 0.4);
+  --shadow-dropdown: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --shadow-primary: 0 4px 12px rgba(99, 102, 241, 0.35);
 
   /* Transitions */
   --transition-fast: 0.15s ease;
@@ -39,7 +52,7 @@
   --transition-slow: 0.3s ease;
 
   /* Shared gradient for section titles */
-  --gradient-title: linear-gradient(135deg, #fff 0%, #8660fa 20%, #a855f7 40%, #8400ff 60%, #a855f7 80%, #fff 100%);
+  --gradient-title: linear-gradient(135deg, #ffffff 0%, #a5b4fc 40%, #6366f1 100%);
 }
 
 /* Shared keyframes — used by section titles across multiple components */

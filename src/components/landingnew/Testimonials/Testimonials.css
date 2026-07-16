@@ -6,7 +6,7 @@
   position: relative;
   width: 100%;
   padding: 60px 0 80px 0;
-  background: #120F17;
+  background: var(--bg-body);
   z-index: 4;
   overflow: hidden;
 }
@@ -20,9 +20,9 @@
 /* ─── Title ─── */
 
 .ln-test-title {
-  font-family: 'Geist Pixel Line', sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-size: clamp(28px, 4vw, 42px);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: #fff;
@@ -108,20 +108,21 @@
 .ln-test-card {
   display: block;
   padding: 20px 22px;
-  border-radius: 14px;
-  background: rgba(18, 15, 23, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
   box-shadow:
     0 2px 16px rgba(0, 0, 0, 0.2),
     inset 0 0.5px 0 rgba(255, 255, 255, 0.06);
   text-decoration: none;
-  transition: border-color 0.3s ease, transform 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
 }
 
 .ln-test-card:hover {
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: var(--color-primary);
   transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.15);
 }
 
 .ln-test-card-head {
@@ -143,27 +144,27 @@
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-secondary);
 }
 
 .ln-test-handle {
   font-family: 'Geist Mono', monospace;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--text-muted);
 }
 
 .ln-test-x-icon {
   width: 13px;
   height: 13px;
-  color: rgba(255, 255, 255, 0.2);
+  color: var(--text-dimmed);
   flex-shrink: 0;
 }
 
 .ln-test-text {
-  font-family: 'Geist', sans-serif;
-  font-size: 13.5px;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 13px;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-secondary);
   margin: 0;
 }
 

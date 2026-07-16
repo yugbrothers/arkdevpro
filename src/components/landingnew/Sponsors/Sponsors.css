@@ -6,7 +6,7 @@
   position: relative;
   width: 100%;
   padding: 80px 0 100px;
-  background: #120F17;
+  background: var(--bg-body);
   z-index: 4;
 }
 
@@ -19,9 +19,9 @@
 /* ─── Title ─── */
 
 .ln-sp-title {
-  font-family: 'Geist Pixel Line', sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-size: clamp(28px, 4vw, 42px);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: #fff;
@@ -51,21 +51,21 @@
 }
 
 .ln-sp-tier-badge--diamond {
-  background: rgba(168, 85, 247, 0.1);
-  border: 1px solid rgba(168, 85, 247, 0.2);
-  color: #c084fc;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  color: #a5b4fc;
 }
 
 .ln-sp-tier-badge--platinum {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--border-secondary);
+  color: var(--text-secondary);
 }
 
 .ln-sp-tier-badge--silver {
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
 }
 
 /* ─── Grid ─── */
@@ -92,9 +92,9 @@
 .ln-sp-card {
   display: flex;
   flex-direction: column;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(18, 15, 23, 0.45);
+  border-radius: 12px;
+  border: 1px solid var(--border-primary);
+  background: var(--bg-card);
   backdrop-filter: blur(32px) saturate(1.3);
   -webkit-backdrop-filter: blur(32px) saturate(1.3);
   box-shadow:
@@ -102,12 +102,13 @@
     inset 0 0.5px 0 rgba(255, 255, 255, 0.06);
   text-decoration: none;
   overflow: hidden;
-  transition: border-color 0.3s ease, transform 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .ln-sp-card:hover {
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: var(--color-primary);
   transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.15);
 }
 
 /* ─── Card Visual (logo area) ─── */
@@ -136,7 +137,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 100%, rgba(168, 85, 247, 0.08) 0%, transparent 65%);
+  background: radial-gradient(ellipse at 50% 100%, rgba(99, 102, 241, 0.08) 0%, transparent 65%);
   pointer-events: none;
 }
 
@@ -169,11 +170,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 18px 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-top: 1px solid var(--border-secondary);
 }
 
 .ln-sp-card-name {
-  font-family: 'Geist', sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-size: 14px;
   font-weight: 500;
   color: #fff;
@@ -181,12 +182,12 @@
 }
 
 .ln-sp-card-arrow {
-  color: rgba(255, 255, 255, 0.25);
+  color: var(--text-muted);
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .ln-sp-card:hover .ln-sp-card-arrow {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-primary);
   transform: translateX(2px);
 }
 
@@ -194,7 +195,7 @@
 
 .ln-sp-card--empty {
   border-style: dashed;
-  border-color: rgba(255, 255, 255, 0.06);
+  border-color: var(--border-secondary);
   background: transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -203,19 +204,19 @@
 }
 
 .ln-sp-card--empty:hover {
-  border-color: rgba(255, 255, 255, 0.06);
+  border-color: var(--border-secondary);
   transform: none;
 }
 
 .ln-sp-empty-label {
   font-family: 'Geist Mono', monospace;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.15);
+  color: var(--text-dimmed);
   letter-spacing: 0.02em;
 }
 
 .ln-sp-empty-name {
-  color: rgba(255, 255, 255, 0.15);
+  color: var(--text-dimmed);
 }
 
 /* ─── Footer links ─── */
@@ -233,13 +234,13 @@
   gap: 6px;
   font-family: 'Geist Mono', monospace;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--text-muted);
   text-decoration: none;
   transition: color 0.2s;
 }
 
 .ln-sp-footer-link:hover {
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-primary);
 }
 
 /* ─── Responsive ─── */
