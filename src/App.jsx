@@ -1,13 +1,61 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { NuqsAdapter } from 'nuqs/adapters/react-router/v6';
 import Providers from './components/layout/Providers';
-import { useEffect, lazy, Suspense } from 'react';
+import { useEffect, lazy, Suspense, Component } from 'react';
 import { ActiveRouteProvider } from './components/context/ActiveRouteContext/ActiveRouteContext';
 import { forceChakraDarkTheme } from './utils/utils';
 import GoogleAnalytics from './components/GoogleAnalytics';
 
 import AnnouncementModal from './components/common/AnnouncementModal/AnnouncementModal';
 import SidebarLayout from './components/layout/SidebarLayout';
+
+class GlobalErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error('GlobalErrorBoundary caught an error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ padding: '40px', background: '#0b0f19', color: '#ef4444', minHeight: '100vh', fontFamily: 'monospace' }}>
+          <h2>Application Error</h2>
+          <p>The application encountered an uncaught rendering error during navigation:</p>
+          <pre style={{ background: '#1e293b', padding: '16px', borderRadius: '4px', color: '#f87171', overflowX: 'auto' }}>
+            {this.state.error?.toString()}
+          </pre>
+          <pre style={{ background: '#1e293b', padding: '16px', borderRadius: '4px', color: '#cbd5e1', overflowX: 'auto', maxHeight: '300px' }}>
+            {this.state.error?.stack}
+          </pre>
+          <button 
+            onClick={() => window.location.reload()} 
+            style={{ 
+              padding: '10px 20px', 
+              background: '#3b82f6', 
+              color: '#fff', 
+              border: 'none', 
+              borderRadius: '4px', 
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              marginTop: '16px'
+            }}
+          >
+            Reload Page
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const LandingPage = lazy(() => import('./pages/LandingPage'));
 const CategoryPage = lazy(() => import('./pages/CategoryPage'));
@@ -25,7 +73,8 @@ function AppContent() {
   return (
     <>
       <Providers>
-        <Suspense fallback={<div style={{ background: '#0b0f19', minHeight: '100vh' }} />}>
+        <GlobalErrorBoundary>
+          <Suspense fallback={<div style={{ background: '#0b0f19', minHeight: '100vh' }} />}>
           <Routes>
             <Route exact path="/" element={<LandingPage />} />
             <Route exact path="/showcase" element={<ShowcasePage />} />
@@ -55,7 +104,8 @@ function AppContent() {
             />
           </Routes>
         </Suspense>
-      </Providers>
+      </GlobalErrorBoundary>
+    </Providers>
     </>
   );
 }

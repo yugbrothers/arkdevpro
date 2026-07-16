@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../components/context/AuthContext/AuthContext';
 import Navbar from '../components/landingnew/Navbar/Navbar';
@@ -7,9 +7,15 @@ import { FaGithub, FaGitlab, FaBitbucket, FaReddit } from 'react-icons/fa';
 import { toast } from 'sonner';
 
 export default function AuthPage() {
+  console.log('AuthPage: rendering component');
+
   const { login } = useAuth();
   const navigate = useNavigate();
   
+  useEffect(() => {
+    console.log('AuthPage: component successfully mounted');
+  }, []);
+
   // States for simulated local dev bypass login
   const [showDeveloperBypass, setShowDeveloperBypass] = useState(true);
   const [devName, setDevName] = useState('John Doe');
