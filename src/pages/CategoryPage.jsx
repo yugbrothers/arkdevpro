@@ -61,6 +61,15 @@ class ErrorBoundary extends React.Component {
   }
 }
 
+const lazyCache = {};
+const getLazyComponent = (subcategory, componentFactory) => {
+  if (!subcategory || !componentFactory) return null;
+  if (!lazyCache[subcategory]) {
+    lazyCache[subcategory] = lazy(componentFactory);
+  }
+  return lazyCache[subcategory];
+};
+
 const CategoryPage = () => {
   const { category, subcategory } = useParams();
   const { transitionPhase, getPreloadedComponent } = useTransition();
@@ -73,7 +82,7 @@ const CategoryPage = () => {
 
   const componentFactory = subcategory && componentMap[subcategory];
   const SubcategoryComponent =
-    getPreloadedComponent(subcategory)?.default || (componentFactory ? lazy(componentFactory) : null);
+    getPreloadedComponent(subcategory)?.default || getLazyComponent(subcategory, componentFactory);
   const Loader = isGetStartedRoute ? GetStartedLoader : SkeletonLoader;
 
   useEffect(() => {

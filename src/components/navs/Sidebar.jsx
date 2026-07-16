@@ -343,7 +343,7 @@ const Category = memo(
 Category.displayName = 'Category';
 
 // ─── Main Component ──────────────────────────────────────────────────────────
-const Sidebar = () => {
+const Sidebar = memo(() => {
   // State
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [isSponsorsOpen, setSponsorsOpen] = useState(false);
@@ -558,6 +558,8 @@ const Sidebar = () => {
       </Box>
     </>
   );
-};
+});
+
+Sidebar.displayName = 'Sidebar';
 
 export default Sidebar;

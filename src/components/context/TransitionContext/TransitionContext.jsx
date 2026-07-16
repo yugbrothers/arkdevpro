@@ -6,6 +6,7 @@ export const TransitionProvider = ({ children }) => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [transitionPhase, setTransitionPhase] = useState('idle');
   const preloadedComponents = useRef(new Map());
+  const isTransitioningRef = useRef(false);
 
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -30,7 +31,8 @@ export const TransitionProvider = ({ children }) => {
 
   const startTransition = useCallback(
     async (targetSubcategory, componentMap, onNavigate) => {
-      if (isTransitioning) return;
+      if (isTransitioningRef.current) return;
+      isTransitioningRef.current = true;
       setIsTransitioning(true);
 
       setTransitionPhase('fade-out');
@@ -50,8 +52,9 @@ export const TransitionProvider = ({ children }) => {
 
       setTransitionPhase('idle');
       setIsTransitioning(false);
+      isTransitioningRef.current = false;
     },
-    [isTransitioning, preloadComponent]
+    [preloadComponent]
   );
 
   const value = {
