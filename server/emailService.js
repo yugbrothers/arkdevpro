@@ -11,7 +11,7 @@ const smtpPort = process.env.SMTP_PORT || 587;
 const smtpUser = process.env.SMTP_USER;
 const smtpPass = process.env.SMTP_PASS;
 const smtpFrom = process.env.SMTP_FROM || 'ArkDev Pro <noreply@arkdevpro.com>';
-const adminEmail = process.env.ADMIN_GMAIL || 'premchandsharma@gmail.com'; // Default admin gmail
+const adminEmail = process.env.ADMIN_GMAIL || 'admin@arkdevpro.com'; // Default admin gmail
 
 let transporter = null;
 
@@ -71,11 +71,13 @@ export const emailService = {
     }
   },
 
-  async notifyAdminOnRegistration(user, ip, browser) {
+  async notifyAdminOnLogin(user, ip, browser) {
+    const actionText = user.isNew ? 'New User Registered 🟢' : 'User Logged In 🔵';
+    const actionSubject = user.isNew ? 'New User Registered' : 'User Logged In';
     const html = `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #0d0e12; color: #f3f4f6; border-radius: 12px; border: 1px solid #1e293b;">
-        <h2 style="color: #6366f1; border-bottom: 1px solid #1e293b; padding-bottom: 10px;">New User Registration 🟢</h2>
-        <p>A new developer has joined ArkDev Pro.</p>
+        <h2 style="color: #6366f1; border-bottom: 1px solid #1e293b; padding-bottom: 10px;">${actionText}</h2>
+        <p>User details:</p>
         <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
           <tr>
             <td style="padding: 8px; font-weight: bold; color: #94a3b8; border-bottom: 1px solid #1e293b;">Name:</td>
@@ -106,7 +108,7 @@ export const emailService = {
     `;
     await this.sendEmail({
       to: adminEmail,
-      subject: `[ArkDevPro] New User Registered: ${user.username}`,
+      subject: `[ArkDevPro] ${actionSubject}: ${user.username}`,
       html
     });
   },

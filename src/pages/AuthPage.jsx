@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../components/context/AuthContext/AuthContext';
 import Navbar from '../components/landingnew/Navbar/Navbar';
 import Footer from '../components/landingnew/Footer/Footer';
-import { FaGithub, FaGitlab, FaBitbucket, FaReddit } from 'react-icons/fa';
+import { FaGithub, FaGitlab, FaBitbucket, FaReddit, FaGoogle } from 'react-icons/fa';
 import { toast } from 'sonner';
 
 export default function AuthPage() {
@@ -30,6 +30,7 @@ export default function AuthPage() {
       gitlab: `${provider}_user@gitlab.com`,
       bitbucket: `${provider}_user@bitbucket.com`,
       reddit: `${provider}_user@reddit.com`,
+      google: `${provider}_user@gmail.com`,
     };
     
     const result = await login(`OAuth Developer (${provider})`, defaultEmails[provider], provider);
@@ -251,6 +252,31 @@ export default function AuthPage() {
                 className="oauth-btn"
               >
                 <FaReddit size={16} color="#ff4500" /> Reddit
+              </button>
+
+              <button 
+                onClick={() => handleOAuthClick('google')}
+                disabled={loading}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  border: '1px solid var(--border-primary)',
+                  padding: '8px 10px',
+                  borderRadius: 'var(--radius-sm)',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  fontFamily: 'var(--font-sans)',
+                  transition: 'all 0.2s',
+                  gridColumn: 'span 2'
+                }}
+                className="oauth-btn"
+              >
+                <FaGoogle size={16} color="#ea4335" /> Google / Gmail
               </button>
             </div>
 

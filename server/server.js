@@ -90,14 +90,12 @@ app.post('/api/auth/mock-login', (req, res) => {
   db.prepare('INSERT INTO login_history (user_id, ip_address, browser) VALUES (?, ?, ?)')
     .run(user.id, req.ip, userAgent);
 
-  // Send admin notification on new registration
-  if (isNew) {
-    emailService.notifyAdminOnRegistration(
-      { username: user.username, email: user.email, provider: provider || 'github' },
-      req.ip,
-      userAgent
-    ).catch(console.error);
-  }
+  // Send admin notification on registration / login
+  emailService.notifyAdminOnLogin(
+    { username: user.username, email: user.email, provider: provider || 'github', isNew },
+    req.ip,
+    userAgent
+  ).catch(console.error);
 
   // Create JWT Token and Set in Cookie
   const token = jwt.sign({ id: user.id, username: user.username, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
