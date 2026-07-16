@@ -413,18 +413,23 @@ const Sidebar = memo(() => {
 
   const createNavigationHandler = useCallback(
     shouldCloseDrawer => async (path, subcategory) => {
-      if (isTransitioning || location.pathname === path) return;
+      console.log('Sidebar: createNavigationHandler triggered for', { path, subcategory });
+      if (location.pathname === path) {
+        console.log('Sidebar: ignoring navigation because current path matches target');
+        return;
+      }
 
       if (shouldCloseDrawer) closeDrawer();
       setPendingActivePath(path);
 
       await startTransition(slug(subcategory), componentMap, () => {
+        console.log('Sidebar: executing onNavigate navigate() to', path);
         navigate(path);
         scrollToTop();
         setPendingActivePath(null);
       });
     },
-    [isTransitioning, location.pathname, startTransition, navigate, closeDrawer]
+    [location.pathname, startTransition, navigate, closeDrawer]
   );
 
   const handleTransitionNavigation = useMemo(() => createNavigationHandler(false), [createNavigationHandler]);

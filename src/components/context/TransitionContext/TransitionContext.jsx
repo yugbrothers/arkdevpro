@@ -31,25 +31,34 @@ export const TransitionProvider = ({ children }) => {
 
   const startTransition = useCallback(
     async (targetSubcategory, componentMap, onNavigate) => {
-      if (isTransitioningRef.current) return;
+      console.log('TransitionContext: startTransition triggered for', targetSubcategory);
+      if (isTransitioningRef.current) {
+        console.log('TransitionContext: startTransition ignored because already transitioning');
+        return;
+      }
       isTransitioningRef.current = true;
       setIsTransitioning(true);
 
+      console.log('TransitionContext: phase set to fade-out');
       setTransitionPhase('fade-out');
 
       const preloadPromise = preloadComponent(targetSubcategory, componentMap);
       await delay(250);
 
+      console.log('TransitionContext: phase set to loading');
       setTransitionPhase('loading');
 
       const MAX_PRELOAD_WAIT = 500;
       await Promise.race([preloadPromise, delay(MAX_PRELOAD_WAIT)]);
 
+      console.log('TransitionContext: triggering onNavigate()');
       onNavigate();
 
+      console.log('TransitionContext: phase set to fade-in');
       setTransitionPhase('fade-in');
       await delay(250);
 
+      console.log('TransitionContext: phase set to idle');
       setTransitionPhase('idle');
       setIsTransitioning(false);
       isTransitioningRef.current = false;

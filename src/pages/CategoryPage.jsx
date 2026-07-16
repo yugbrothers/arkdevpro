@@ -80,6 +80,8 @@ const CategoryPage = () => {
   const isGetStartedRoute = category === 'get-started';
   const isIndexPage = subcategory === 'index';
 
+  console.log('CategoryPage rendering:', { subcategory, transitionPhase, opacity, isIndexPage });
+
   const componentFactory = subcategory && componentMap[subcategory];
   const SubcategoryComponent =
     getPreloadedComponent(subcategory)?.default || getLazyComponent(subcategory, componentFactory);
