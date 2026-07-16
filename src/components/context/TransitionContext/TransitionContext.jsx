@@ -5,23 +5,18 @@ const TransitionContext = createContext();
 export const TransitionProvider = ({ children }) => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [transitionPhase, setTransitionPhase] = useState('idle');
-  const preloadedComponents = useRef(new Map());
   const isTransitioningRef = useRef(false);
 
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
   const preloadComponent = useCallback(async (subcategory, componentMap) => {
-    if (!subcategory || preloadedComponents.current.has(subcategory)) {
-      return preloadedComponents.current.get(subcategory);
-    }
+    if (!subcategory) return null;
 
     try {
       const loader = componentMap[subcategory];
 
       if (loader) {
-        const component = await loader();
-        preloadedComponents.current.set(subcategory, component);
-        return component;
+        return await loader();
       }
     } catch (error) {
       console.error('Failed to preload component:', error);
@@ -70,9 +65,7 @@ export const TransitionProvider = ({ children }) => {
     isTransitioning,
     transitionPhase,
     startTransition,
-    preloadComponent,
-    clearPreloadedComponents: useCallback(() => preloadedComponents.current.clear(), []),
-    getPreloadedComponent: useCallback(subcategory => preloadedComponents.current.get(subcategory), [])
+    preloadComponent
   };
 
   return <TransitionContext.Provider value={value}>{children}</TransitionContext.Provider>;

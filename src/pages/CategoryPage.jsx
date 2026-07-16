@@ -72,7 +72,7 @@ const getLazyComponent = (subcategory, componentFactory) => {
 
 const CategoryPage = () => {
   const { category, subcategory } = useParams();
-  const { transitionPhase, getPreloadedComponent } = useTransition();
+  const { transitionPhase } = useTransition();
 
   const decodedLabel = decodeLabel(subcategory);
   const isLoading = transitionPhase === 'loading';
@@ -83,8 +83,7 @@ const CategoryPage = () => {
   console.log('CategoryPage rendering:', { subcategory, transitionPhase, opacity, isIndexPage });
 
   const componentFactory = subcategory && componentMap[subcategory];
-  const SubcategoryComponent =
-    getPreloadedComponent(subcategory)?.default || getLazyComponent(subcategory, componentFactory);
+  const SubcategoryComponent = getLazyComponent(subcategory, componentFactory);
   const Loader = isGetStartedRoute ? GetStartedLoader : SkeletonLoader;
 
   useEffect(() => {
