@@ -50,6 +50,33 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const loginWithToken = async (token, provider) => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/auth/firebase-login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ provider })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setUser(data.user);
+        setSubscription(data.subscription);
+        return { success: true };
+      } else {
+        const data = await res.json();
+        return { success: false, error: data.error };
+      }
+    } catch (err) {
+      return { success: false, error: 'Network error occurred. Please try again.' };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const logout = async () => {
     setLoading(true);
     try {
@@ -70,7 +97,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, subscription, loading, login, logout, updateSubscription, refreshUser: fetchCurrentUser }}>
+    <AuthContext.Provider value={{ user, subscription, loading, login, loginWithToken, logout, updateSubscription, refreshUser: fetchCurrentUser }}>
       {children}
     </AuthContext.Provider>
   );

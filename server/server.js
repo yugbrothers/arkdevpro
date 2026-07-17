@@ -6,6 +6,37 @@ import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import db from './db.js';
 import { emailService } from './emailService.js';
+import admin from 'firebase-admin';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Check for Firebase Admin credentials
+let firebaseAdminApp = null;
+const serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT || path.resolve(__dirname, 'firebase-service-account.json');
+const hasFirebaseAdminConfig = fs.existsSync(serviceAccountPath) || !!process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+
+if (hasFirebaseAdminConfig) {
+  try {
+    let serviceAccount;
+    if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
+      serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
+    } else {
+      serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+    }
+    
+    firebaseAdminApp = admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount)
+    });
+    console.log('🔥 Firebase Admin SDK initialized successfully.');
+  } catch (err) {
+    console.error('❌ Failed to initialize Firebase Admin SDK:', err.message);
+  }
+} else {
+  console.log('⚠️ Firebase Admin SDK config not found. Running in mock fallback validation mode.');
+}
 
 const app = express();
 const PORT = process.env.PORT || 5050;
@@ -62,6 +93,97 @@ const authenticate = (req, res, next) => {
 // ==========================================
 // AUTHENTICATION API
 // ==========================================
+
+// Firebase OAuth Token Verification and Database Registration
+app.post('/api/auth/firebase-login', async (req, res) => {
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split('Bearer ')[1];
+  const { provider } = req.body;
+
+  if (!token) {
+    return res.status(400).json({ error: 'Missing authorization token.' });
+  }
+
+  let email, username, avatarUrl, providerUserId;
+  let isVerified = false;
+
+  // 1. Verify token
+  if (firebaseAdminApp && hasFirebaseAdminConfig) {
+    try {
+      const decodedToken = await admin.auth().verifyIdToken(token);
+      email = decodedToken.email;
+      username = decodedToken.name || decodedToken.email.split('@')[0];
+      avatarUrl = decodedToken.picture || `https://api.dicebear.com/7.x/pixel-art/svg?seed=${encodeURIComponent(username)}`;
+      providerUserId = decodedToken.uid;
+      isVerified = true;
+    } catch (err) {
+      console.error('❌ Firebase token verification failed:', err.message);
+      return res.status(401).json({ error: 'Invalid or expired authentication token.' });
+    }
+  } else {
+    // Graceful fallback mock verification mode
+    console.warn('⚠️ Running mock token verification fallback.');
+    if (token.startsWith('mock_') || token.length > 10) {
+      // Simulate decoding a mock token or Firebase token in fallback mode
+      providerUserId = 'mock_fb_' + crypto.createHash('md5').update(token).digest('hex').slice(0, 8);
+      username = `OAuth Developer (${provider || 'google'})`;
+      email = `${provider || 'google'}_user@gmail.com`;
+      avatarUrl = `https://api.dicebear.com/7.x/pixel-art/svg?seed=${encodeURIComponent(username)}`;
+      isVerified = true;
+    } else {
+      return res.status(401).json({ error: 'Token verification failed in fallback mode.' });
+    }
+  }
+
+  if (!isVerified || !email) {
+    return res.status(401).json({ error: 'Authentication failed.' });
+  }
+
+  // 2. Find or create user in SQLite database
+  const userId = 'u_' + crypto.createHash('md5').update(email).digest('hex').slice(0, 8);
+  let user = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
+  let isNew = false;
+
+  if (!user) {
+    db.prepare('INSERT INTO users (id, username, email, avatar_url) VALUES (?, ?, ?, ?)')
+      .run(userId, username, email, avatarUrl);
+    db.prepare('INSERT INTO oauth_accounts (user_id, provider, provider_user_id) VALUES (?, ?, ?)')
+      .run(userId, provider || 'google', providerUserId);
+    user = { id: userId, username, email, avatar_url: avatarUrl, role: 'user' };
+    isNew = true;
+  } else {
+    // Update avatar and username if updated on provider
+    db.prepare('UPDATE users SET username = ?, avatar_url = ? WHERE id = ?')
+      .run(username, avatarUrl, user.id);
+  }
+
+  // 3. Record login history
+  const userAgent = req.headers['user-agent'] || 'Unknown';
+  db.prepare('INSERT INTO login_history (user_id, ip_address, browser) VALUES (?, ?, ?)')
+    .run(user.id, req.ip, userAgent);
+
+  // 4. Send admin notification email to admin@arkdevpro.com
+  emailService.notifyAdminOnLogin(
+    { username: user.username, email: user.email, provider: provider || 'google', isNew },
+    req.ip,
+    userAgent
+  ).catch(console.error);
+
+  // 5. Create JWT Token and Set in Cookie
+  const JWT_SECRET = process.env.JWT_SECRET || 'arkdevpro-super-secret-key-1357';
+  const sessionToken = jwt.sign({ id: user.id, username: user.username, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+  res.cookie('token', sessionToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+  });
+
+  // 6. Get active subscription if any
+  const subscription = db.prepare("SELECT * FROM subscriptions WHERE user_id = ? AND status = 'active'").get(user.id);
+
+  res.json({ user, subscription });
+});
 
 // Mock/Simulated OAuth Login (For development, testing, and sandbox out-of-the-box)
 app.post('/api/auth/mock-login', (req, res) => {

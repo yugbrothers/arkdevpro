@@ -5,11 +5,20 @@ import Navbar from '../components/landingnew/Navbar/Navbar';
 import Footer from '../components/landingnew/Footer/Footer';
 import { FaGithub, FaGitlab, FaBitbucket, FaReddit, FaGoogle } from 'react-icons/fa';
 import { toast } from 'sonner';
+import { 
+  auth, 
+  googleProvider, 
+  githubProvider, 
+  gitlabProvider, 
+  bitbucketProvider, 
+  hasFirebaseConfig 
+} from '../db/firebase';
+import { signInWithPopup } from 'firebase/auth';
 
 export default function AuthPage() {
   console.log('AuthPage: rendering component');
 
-  const { login } = useAuth();
+  const { login, loginWithToken } = useAuth();
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -24,23 +33,72 @@ export default function AuthPage() {
 
   const handleOAuthClick = async (provider) => {
     setLoading(true);
-    // Simulate OAuth redirect or mock sign in with random credentials
-    const defaultEmails = {
-      github: `${provider}_user@github.com`,
-      gitlab: `${provider}_user@gitlab.com`,
-      bitbucket: `${provider}_user@bitbucket.com`,
-      reddit: `${provider}_user@reddit.com`,
-      google: `${provider}_user@gmail.com`,
-    };
-    
-    const result = await login(`OAuth Developer (${provider})`, defaultEmails[provider], provider);
-    setLoading(false);
-    
-    if (result.success) {
-      toast.success(`Welcome! Logged in via ${provider.toUpperCase()}`);
-      navigate('/');
+
+    if (hasFirebaseConfig && auth) {
+      try {
+        let providerInstance = null;
+        if (provider === 'google') providerInstance = googleProvider;
+        else if (provider === 'github') providerInstance = githubProvider;
+        else if (provider === 'gitlab') providerInstance = gitlabProvider;
+        else if (provider === 'bitbucket') providerInstance = bitbucketProvider;
+        
+        // Reddit does not have a built-in provider in standard Firebase SDK (requires custom OIDC setting)
+        if (!providerInstance) {
+          console.warn(`No built-in Firebase provider configuration for ${provider}. Falling back to Mock Sign-In.`);
+          toast.info(`Mocking sign-in for ${provider.toUpperCase()} (Firebase standard SDK doesn't include it).`);
+          const defaultEmails = {
+            reddit: `reddit_user@reddit.com`
+          };
+          const result = await login(`OAuth Developer (${provider})`, defaultEmails[provider] || 'user@oauth.com', provider);
+          setLoading(false);
+          if (result.success) {
+            toast.success(`Welcome! Logged in via ${provider.toUpperCase()} (Mock)`);
+            navigate('/');
+          } else {
+            toast.error(result.error || 'Failed to log in');
+          }
+          return;
+        }
+
+        const userCredential = await signInWithPopup(auth, providerInstance);
+        const idToken = await userCredential.user.getIdToken();
+
+        const result = await loginWithToken(idToken, provider);
+        setLoading(false);
+
+        if (result.success) {
+          toast.success(`Successfully authenticated via ${provider.toUpperCase()}!`);
+          navigate('/');
+        } else {
+          toast.error(result.error || 'Failed to log in via server authentication');
+        }
+      } catch (error) {
+        console.error("Firebase Sign In error:", error);
+        setLoading(false);
+        toast.error(`Authentication failed: ${error.message}`);
+      }
     } else {
-      toast.error(result.error || 'Failed to log in');
+      // Fallback Mock Sign-In
+      console.warn(`Firebase not configured. Running fallback mock sign-in for provider: ${provider}`);
+      toast.warning(`Firebase not configured. Using Mock Sign-In for ${provider.toUpperCase()}.`);
+      
+      const defaultEmails = {
+        github: `${provider}_user@github.com`,
+        gitlab: `${provider}_user@gitlab.com`,
+        bitbucket: `${provider}_user@bitbucket.com`,
+        reddit: `${provider}_user@reddit.com`,
+        google: `${provider}_user@gmail.com`,
+      };
+      
+      const result = await login(`OAuth Developer (${provider})`, defaultEmails[provider] || 'user@oauth.com', provider);
+      setLoading(false);
+      
+      if (result.success) {
+        toast.success(`Welcome! Logged in via ${provider.toUpperCase()} (Mock)`);
+        navigate('/');
+      } else {
+        toast.error(result.error || 'Failed to log in');
+      }
     }
   };
 
