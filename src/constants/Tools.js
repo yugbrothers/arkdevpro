@@ -1,4 +1,4 @@
-import { Palette, Shapes, ImageIcon } from 'lucide-react';
+import { Palette, Shapes, Video } from 'lucide-react';
 
 export const TOOLS = [
   {
@@ -19,8 +19,8 @@ export const TOOLS = [
   },
   {
     id: 'texture-lab',
-    label: 'Texture Lab',
-    icon: ImageIcon,
+    label: 'Visual Avatar',
+    icon: Video,
     path: '/tools/texture-lab',
     description:
       'Apply effects to your images and export the results. Add noise, dithering, halftone, ASCII art, and more. Save your presets for sharing or future use.'

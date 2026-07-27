@@ -86,6 +86,8 @@ const ProfilePage = lazyRetry(() => import('./pages/ProfilePage'));
 const PricingPage = lazyRetry(() => import('./pages/PricingPage'));
 const CheckoutPage = lazyRetry(() => import('./pages/CheckoutPage'));
 const AdminDashboard = lazyRetry(() => import('./pages/AdminDashboard'));
+const VisualAvatarPage = lazyRetry(() => import('./pages/VisualAvatar/VisualAvatarPage'));
+const VisualAvatarViewer = lazyRetry(() => import('./pages/VisualAvatar/VisualAvatarViewer'));
 
 function AppContent() {
   return (
@@ -95,6 +97,8 @@ function AppContent() {
           <Suspense fallback={<div style={{ background: '#0b0f19', minHeight: '100vh' }} />}>
           <Routes>
             <Route exact path="/" element={<LandingPage />} />
+            <Route exact path="/visual-avatar" element={<VisualAvatarPage />} />
+            <Route exact path="/visual-avatar/view/:id" element={<VisualAvatarViewer />} />
             <Route exact path="/showcase" element={<ShowcasePage />} />
             <Route exact path="/sponsors" element={<SponsorsPage />} />
             <Route exact path="/signin" element={<AuthPage />} />

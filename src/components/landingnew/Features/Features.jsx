@@ -298,7 +298,7 @@ const AITerminal = () => {
             <div className="ln-feat-aichat-dots">
               <span /><span /><span />
             </div>
-            <span className="ln-feat-aichat-title">Editor</span>
+            <span className="ln-feat-aichat-title">Visual Avatar</span>
           </div>
 
           <div className="ln-feat-aichat-prompt-row">
@@ -390,7 +390,7 @@ const CARDS = [
     visual: <ComponentMarquee />,
   },
   {
-    title: 'Visual Editors',
+    title: 'Visual Avatars',
     desc: 'Three free tools to play with components and grab the code.',
     span: 3,
     visual: <ToolsFloat />,

@@ -19,6 +19,7 @@ import './Navbar.css';
 
 const NAV_LINKS = [
   { label: 'Browse', to: '/', match: '/categories' },
+  { label: 'Visual Avatar', to: '/visual-avatar', match: '/visual-avatar' },
   { label: 'Showcase', to: '/showcase', match: '/showcase' },
   { label: 'Tools', to: '/tools', match: '/tools' },
   { label: 'Pricing', to: '/pricing', match: '/pricing' },
