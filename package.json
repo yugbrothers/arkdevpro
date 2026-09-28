@@ -17,7 +17,9 @@
     "storage:sync": "node scripts/b2Sync.js sync",
     "storage:upload": "node scripts/b2Sync.js upload",
     "storage:download": "node scripts/b2Sync.js download",
-    "storage:verify": "node scripts/b2Sync.js verify"
+    "storage:verify": "node scripts/b2Sync.js verify",
+    "deploy": "npm run build && npx wrangler deploy",
+    "pages:deploy": "npm run build && npx wrangler pages deploy dist"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.2.4",

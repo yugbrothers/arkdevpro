@@ -12,6 +12,8 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
   server: {
+    port: 5175,
+    host: true,
     hmr: true,
     watch: {
       ignored: ['**/public/r/**']
