@@ -1,5 +1,6 @@
 {
   "name": "arkdevpro",
+  "pages_build_output_dir": "dist",
   "compatibility_date": "2025-06-15",
   "assets": {
     "directory": "./dist",
