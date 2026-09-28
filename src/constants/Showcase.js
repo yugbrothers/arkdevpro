@@ -33,6 +33,6 @@ export const SHOWCASE_ITEMS = [
     name: 'Abhishek',
     url: 'https://abhi.arkdevpro.com/',
     using: '<CountUp />',
-    image: '/assets/showcase/showcase-devraj.webp'
+    image: '/assets/showcase/showcase-abhishek.webp'
   }
 ];
