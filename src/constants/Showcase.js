@@ -30,8 +30,8 @@ export const SHOWCASE_ITEMS = [
     image: '/assets/showcase/showcase-deepraj.webp'
   },
   {
-    name: 'Devraj',
-    url: 'https://devrajchatribin.com/about',
+    name: 'Abhishek',
+    url: 'https://abhi.arkdevpro.com/',
     using: '<CountUp />',
     image: '/assets/showcase/showcase-devraj.webp'
   }
