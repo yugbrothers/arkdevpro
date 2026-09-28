@@ -46,12 +46,20 @@ const ShowcasePage = () => {
               key={item.url}
             >
               <div className="showcase-card-media">
-                <img
-                  className="showcase-card-img"
-                  src={item.image}
-                  alt={`Showcase website by ${item.name || 'Anonymous'}`}
-                  loading="lazy"
-                />
+                {item.image ? (
+                  <img
+                    className="showcase-card-img"
+                    src={item.image}
+                    alt={`Showcase website by ${item.name || 'Anonymous'}`}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="showcase-card-photoless">
+                    <span className="showcase-photoless-tag">Portfolio ↗</span>
+                    <span className="showcase-photoless-title">{item.name}</span>
+                    <span className="showcase-photoless-using">{item.using}</span>
+                  </div>
+                )}
               </div>
               <div className="showcase-card-info">
                 <span className="showcase-card-name">{item.name || 'Anonymous'}</span>
