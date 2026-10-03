@@ -207,6 +207,17 @@
   border-color: rgba(244, 63, 94, 0.55);
 }
 
+.showcase-photoless-tag.tag-ai {
+  color: #22d3ee;
+  background: rgba(34, 211, 238, 0.12);
+  border: 1px solid rgba(34, 211, 238, 0.32);
+  box-shadow: 0 0 14px rgba(34, 211, 238, 0.18);
+}
+
+.showcase-card:hover .showcase-card-photoless:has(.tag-ai) {
+  border-color: rgba(34, 211, 238, 0.5);
+}
+
 .showcase-card-photoless.fashion-theme {
   background: radial-gradient(circle at 50% 25%, #2a1424 0%, #130a17 55%, #0a070e 100%);
   border-color: rgba(244, 63, 94, 0.2);
@@ -215,6 +226,16 @@
 .showcase-card:hover .showcase-card-photoless.fashion-theme {
   border-color: rgba(244, 63, 94, 0.55);
   box-shadow: 0 4px 30px rgba(244, 63, 94, 0.18);
+}
+
+.showcase-card-photoless.ai-theme {
+  background: radial-gradient(circle at 50% 25%, #082435 0%, #061521 55%, #02090f 100%);
+  border-color: rgba(34, 211, 238, 0.22);
+}
+
+.showcase-card:hover .showcase-card-photoless.ai-theme {
+  border-color: rgba(34, 211, 238, 0.55);
+  box-shadow: 0 4px 30px rgba(34, 211, 238, 0.2);
 }
 
 .showcase-photoless-tagline {
@@ -269,6 +290,12 @@
   background: rgba(244, 63, 94, 0.12);
   border: 1px solid rgba(244, 63, 94, 0.25);
   white-space: nowrap;
+}
+
+.showcase-card-brand-pill.brand-ai {
+  color: #22d3ee;
+  background: rgba(34, 211, 238, 0.12);
+  border: 1px solid rgba(34, 211, 238, 0.25);
 }
 
 .showcase-card-desc {

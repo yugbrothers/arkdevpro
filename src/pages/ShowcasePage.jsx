@@ -54,11 +54,15 @@ const ShowcasePage = () => {
                     loading="lazy"
                   />
                 ) : (
-                  <div className={`showcase-card-photoless ${item.brand === 'Fashion Brand' ? 'fashion-theme' : ''}`}>
+                  <div className={`showcase-card-photoless ${
+                    item.brand === 'Fashion Brand' ? 'fashion-theme' :
+                    (item.brand === 'AI System' || item.tag?.toLowerCase().includes('ai')) ? 'ai-theme' : ''
+                  }`}>
                     <span className={`showcase-photoless-tag ${
                       item.tag?.toLowerCase().includes('fashion') ? 'tag-fashion' :
                       item.tag?.toLowerCase().includes('commerce') ? 'tag-ecommerce' :
                       item.tag?.toLowerCase().includes('platform') ? 'tag-platform' :
+                      item.tag?.toLowerCase().includes('ai') ? 'tag-ai' :
                       item.tag?.toLowerCase().includes('project') ? 'tag-project' : ''
                     }`}>
                       {item.tag || 'Portfolio ↗'}
@@ -75,7 +79,12 @@ const ShowcasePage = () => {
                 <div className="showcase-card-name-row">
                   <span className="showcase-card-name">{item.name || 'Anonymous'}</span>
                   {item.brand && (
-                    <span className="showcase-card-brand-pill">{item.brand}</span>
+                    <span className={`showcase-card-brand-pill ${
+                      item.brand === 'Fashion Brand' ? 'brand-fashion' :
+                      item.brand.toLowerCase().includes('ai') ? 'brand-ai' : ''
+                    }`}>
+                      {item.brand}
+                    </span>
                   )}
                 </div>
                 {item.description && (
