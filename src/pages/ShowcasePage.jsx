@@ -54,15 +54,33 @@ const ShowcasePage = () => {
                     loading="lazy"
                   />
                 ) : (
-                  <div className="showcase-card-photoless">
-                    <span className="showcase-photoless-tag">Portfolio ↗</span>
+                  <div className={`showcase-card-photoless ${item.brand === 'Fashion Brand' ? 'fashion-theme' : ''}`}>
+                    <span className={`showcase-photoless-tag ${
+                      item.tag?.toLowerCase().includes('fashion') ? 'tag-fashion' :
+                      item.tag?.toLowerCase().includes('commerce') ? 'tag-ecommerce' :
+                      item.tag?.toLowerCase().includes('platform') ? 'tag-platform' :
+                      item.tag?.toLowerCase().includes('project') ? 'tag-project' : ''
+                    }`}>
+                      {item.tag || 'Portfolio ↗'}
+                    </span>
                     <span className="showcase-photoless-title">{item.name}</span>
+                    {item.tagline && (
+                      <span className="showcase-photoless-tagline">{item.tagline}</span>
+                    )}
                     <span className="showcase-photoless-using">{item.using}</span>
                   </div>
                 )}
               </div>
               <div className="showcase-card-info">
-                <span className="showcase-card-name">{item.name || 'Anonymous'}</span>
+                <div className="showcase-card-name-row">
+                  <span className="showcase-card-name">{item.name || 'Anonymous'}</span>
+                  {item.brand && (
+                    <span className="showcase-card-brand-pill">{item.brand}</span>
+                  )}
+                </div>
+                {item.description && (
+                  <p className="showcase-card-desc">{item.description}</p>
+                )}
                 <span className="showcase-card-using">{item.using}</span>
               </div>
             </a>
