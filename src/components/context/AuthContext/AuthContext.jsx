@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { apiFetch, setSessionToken } from '../../../utils/api';
 
 const AuthContext = createContext(null);
 
@@ -9,7 +10,7 @@ export function AuthProvider({ children }) {
 
   const fetchCurrentUser = async () => {
     try {
-      const res = await fetch('/api/auth/me');
+      const res = await apiFetch('/api/auth/me');
       if (res.ok) {
         const data = await res.json();
         setUser(data.user);
@@ -29,13 +30,14 @@ export function AuthProvider({ children }) {
   const login = async (username, email, provider = 'github') => {
     setLoading(true);
     try {
-      const res = await fetch('/api/auth/mock-login', {
+      const res = await apiFetch('/api/auth/mock-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, email, provider })
       });
       if (res.ok) {
         const data = await res.json();
+        if (data.token) setSessionToken(data.token);
         setUser(data.user);
         setSubscription(data.subscription);
         return { success: true };
@@ -53,7 +55,7 @@ export function AuthProvider({ children }) {
   const loginWithToken = async (token, provider) => {
     setLoading(true);
     try {
-      const res = await fetch('/api/auth/firebase-login', {
+      const res = await apiFetch('/api/auth/firebase-login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -63,6 +65,7 @@ export function AuthProvider({ children }) {
       });
       if (res.ok) {
         const data = await res.json();
+        if (data.token) setSessionToken(data.token);
         setUser(data.user);
         setSubscription(data.subscription);
         return { success: true };
@@ -80,8 +83,9 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/auth/logout', { method: 'POST' });
+      const res = await apiFetch('/api/auth/logout', { method: 'POST' });
       if (res.ok) {
+        setSessionToken(null);
         setUser(null);
         setSubscription(null);
       }

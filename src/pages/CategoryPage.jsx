@@ -2,6 +2,7 @@ import React, { useEffect, Suspense, lazy } from 'react';
 import { useParams } from 'react-router-dom';
 import { componentMap } from '../constants/Components';
 import { decodeLabel } from '../utils/utils';
+import { apiFetch } from '../utils/api';
 import { Box, Text } from '@chakra-ui/react';
 import { useTransition } from '../hooks/useTransition';
 import BackToTopButton from '../components/common/BackToTopButton';
@@ -20,7 +21,7 @@ class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     console.error('ErrorBoundary caught error:', error, errorInfo);
-    fetch('/api/debug-log', {
+    apiFetch('/api/debug-log', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

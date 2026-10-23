@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../components/context/AuthContext/AuthContext';
+import { apiFetch } from '../utils/api';
 import Navbar from '../components/landingnew/Navbar/Navbar';
 import Footer from '../components/landingnew/Footer/Footer';
 import { toast } from 'sonner';
@@ -23,7 +24,7 @@ export default function AdminDashboard() {
 
     const fetchAdminStats = async () => {
       try {
-        const res = await fetch('/api/admin/stats');
+        const res = await apiFetch('/api/admin/stats');
         if (res.ok) {
           const data = await res.json();
           setStats(data);

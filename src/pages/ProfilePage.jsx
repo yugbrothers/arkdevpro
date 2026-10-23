@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../components/context/AuthContext/AuthContext';
+import { apiFetch } from '../utils/api';
 import Navbar from '../components/landingnew/Navbar/Navbar';
 import Footer from '../components/landingnew/Footer/Footer';
 import { jsPDF } from 'jspdf';
@@ -24,7 +25,7 @@ export default function ProfilePage() {
 
     const fetchDetails = async () => {
       try {
-        const res = await fetch('/api/profile/details');
+        const res = await apiFetch('/api/profile/details');
         if (res.ok) {
           const data = await res.json();
           setDetails(data);

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../components/context/AuthContext/AuthContext';
+import { apiFetch } from '../utils/api';
 import Navbar from '../components/landingnew/Navbar/Navbar';
 import Footer from '../components/landingnew/Footer/Footer';
 import { jsPDF } from 'jspdf';
@@ -39,7 +40,7 @@ export default function CheckoutPage() {
     setLoading(true);
     try {
       // Step 1: Create Order on server
-      const orderRes = await fetch('/api/payments/create-order', {
+      const orderRes = await apiFetch('/api/payments/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ plan })
@@ -49,7 +50,7 @@ export default function CheckoutPage() {
       const orderData = await orderRes.json();
 
       // Step 2: Verify payment on server (mock signature verify)
-      const verifyRes = await fetch('/api/payments/verify', {
+      const verifyRes = await apiFetch('/api/payments/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
