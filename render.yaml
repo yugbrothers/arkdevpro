@@ -14,4 +14,4 @@ services:
       - key: TURSO_DATABASE_URL
         value: libsql://arkdevpro-abhi-ssh.aws-ap-south-1.turso.io
       - key: TURSO_AUTH_TOKEN
-        sync: false
+        value: eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3OTI3NTIxNjUsImlkIjoiMDFhMTY4NWEtNWQwMS03N2RhLWEzYTUtNDBlMjVlMDAxMTQxIiwia2lkIjoiRTlQbjc1M2VjLUVuM0RlZzFVYTZrSXdKMWhnWDJBRTB0XzlKdDVrVDVtbyIsInJpZCI6ImE0MjAzMDM4LTRhMjEtNGJjMi05ZDlhLTg4M2IzYWJiNDk2NSJ9.2czaLTFnEqDty1gweZ9leV0ua2Goh8lGz7_dw6w_gvtc8hzDvowkfquI8978tEoKTdsSB84S8QnhRbPZqSD5Bg
