@@ -1,4 +1,10 @@
-const API_BASE_URL = (import.meta.env.VITE_API_URL || import.meta.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '');
+const API_BASE_URL = (
+  import.meta.env.VITE_API_URL ||
+  import.meta.env.NEXT_PUBLIC_API_URL ||
+  (typeof window !== 'undefined' && !['localhost', '127.0.0.1'].includes(window.location.hostname)
+    ? 'https://arkdevpro-backend.onrender.com'
+    : '')
+).replace(/\/+$/, '');
 
 const TOKEN_STORAGE_KEY = 'arkdev_session_token';
 
