@@ -1,4 +1,3 @@
-import Database from 'better-sqlite3';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
@@ -102,9 +101,10 @@ async function executeTurso(sql, args = []) {
 
 // Local SQLite fallback when TURSO_DATABASE_URL is not configured
 let localSqlite = null;
-let localDbPath = null;
+let localDbPath = path.resolve(__dirname, 'database.sqlite');
 
-if (!isTurso) {
+async function getLocalSqlite() {
+  if (localSqlite) return localSqlite;
   if (process.env.VERCEL) {
     const tmpPath = '/tmp/database.sqlite';
     const originalPath = path.resolve(__dirname, 'database.sqlite');
@@ -120,12 +120,12 @@ if (!isTurso) {
       }
     }
     localDbPath = tmpPath;
-  } else {
-    localDbPath = path.resolve(__dirname, 'database.sqlite');
   }
 
+  const { default: Database } = await import('better-sqlite3');
   localSqlite = new Database(localDbPath);
   localSqlite.pragma('journal_mode = WAL');
+  return localSqlite;
 }
 
 const db = {
@@ -138,7 +138,8 @@ const db = {
       const { rows } = await executeTurso(sql, flatParams);
       return rows[0];
     }
-    return localSqlite.prepare(sql).get(...flatParams);
+    const sqlite = await getLocalSqlite();
+    return sqlite.prepare(sql).get(...flatParams);
   },
 
   async all(sql, ...params) {
@@ -147,7 +148,8 @@ const db = {
       const { rows } = await executeTurso(sql, flatParams);
       return rows;
     }
-    return localSqlite.prepare(sql).all(...flatParams);
+    const sqlite = await getLocalSqlite();
+    return sqlite.prepare(sql).all(...flatParams);
   },
 
   async run(sql, ...params) {
@@ -155,7 +157,8 @@ const db = {
     if (isTurso) {
       return await executeTurso(sql, flatParams);
     }
-    return localSqlite.prepare(sql).run(...flatParams);
+    const sqlite = await getLocalSqlite();
+    return sqlite.prepare(sql).run(...flatParams);
   },
 
   async exec(sqlBatch) {
@@ -169,7 +172,8 @@ const db = {
       }
       return;
     }
-    localSqlite.exec(sqlBatch);
+    const sqlite = await getLocalSqlite();
+    sqlite.exec(sqlBatch);
   }
 };
 

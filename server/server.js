@@ -577,6 +577,14 @@ if (fs.existsSync(distPath)) {
     }
     next();
   });
+} else {
+  app.get('/', (req, res) => {
+    res.json({
+      status: 'ok',
+      service: 'ArkDev Pro SaaS Backend',
+      database: db.isTurso ? 'turso-cloud-sqlite' : 'local-sqlite'
+    });
+  });
 }
 
 // Start Server (both local development and Render production)
