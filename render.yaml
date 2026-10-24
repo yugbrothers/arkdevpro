@@ -3,7 +3,7 @@ services:
     name: arkdevpro-backend
     runtime: node
     plan: free
-    buildCommand: npm install --include=dev && npm run build
+    buildCommand: npm install --omit=dev --omit=optional
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:

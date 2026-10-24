@@ -567,25 +567,23 @@ app.post('/api/debug-log', (req, res) => {
   res.sendStatus(200);
 });
 
-// Serve static frontend build in production if dist/ exists
-const distPath = path.resolve(__dirname, '../dist');
-if (fs.existsSync(distPath)) {
-  app.use(express.static(distPath));
-  app.use((req, res, next) => {
-    if (req.method === 'GET' && !req.path.startsWith('/api')) {
-      return res.sendFile(path.join(distPath, 'index.html'));
-    }
-    next();
+// Pure Backend API: Root endpoint returns API status
+app.get('/', (req, res) => {
+  res.json({
+    status: 'ok',
+    service: 'ArkDev Pro Backend API',
+    frontend: 'https://arkdevpro.com',
+    database: db.isTurso ? 'turso-cloud-sqlite' : 'local-sqlite'
   });
-} else {
-  app.get('/', (req, res) => {
-    res.json({
-      status: 'ok',
-      service: 'ArkDev Pro SaaS Backend',
-      database: db.isTurso ? 'turso-cloud-sqlite' : 'local-sqlite'
-    });
-  });
-}
+});
+
+// Any other non-API route redirects to Cloudflare frontend on arkdevpro.com
+app.use((req, res, next) => {
+  if (!req.path.startsWith('/api')) {
+    return res.redirect(301, `https://arkdevpro.com${req.url}`);
+  }
+  next();
+});
 
 // Start Server (both local development and Render production)
 if (!process.env.VERCEL) {
