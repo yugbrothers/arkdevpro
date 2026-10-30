@@ -40,6 +40,11 @@ server/database.sqlite
 # Local emails preview
 server/sent_emails/
 
+# Firebase credentials
+*firebase-service-account*.json
+*serviceAccount*.json
+*firebase-adminsdk*.json
+
 # macOS metadata
 ._*
 .DS_Store

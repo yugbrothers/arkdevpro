@@ -7,6 +7,7 @@ import crypto from 'crypto';
 import db, { initDatabase } from './db.js';
 import { emailService } from './emailService.js';
 import admin from 'firebase-admin';
+import { getAuth } from 'firebase-admin/auth';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -27,8 +28,9 @@ if (hasFirebaseAdminConfig) {
       serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
     }
 
+    const certFn = admin.credential?.cert || admin.cert;
     firebaseAdminApp = admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount)
+      credential: certFn(serviceAccount)
     });
     console.log('🔥 Firebase Admin SDK initialized successfully.');
   } catch (err) {
@@ -173,7 +175,7 @@ app.post('/api/auth/firebase-login', async (req, res) => {
     // 1. Verify token
     if (firebaseAdminApp) {
       try {
-        const decodedToken = await admin.auth().verifyIdToken(token);
+        const decodedToken = await getAuth(firebaseAdminApp).verifyIdToken(token);
         email = decodedToken.email;
         username = decodedToken.name || decodedToken.email?.split('@')[0];
         avatarUrl = decodedToken.picture || `https://api.dicebear.com/7.x/pixel-art/svg?seed=${encodeURIComponent(username)}`;
