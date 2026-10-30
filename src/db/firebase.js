@@ -27,6 +27,7 @@ const bitbucketProvider = new OAuthProvider('oidc.bitbucket');
 // Configure OAuth provider defaults
 googleProvider.addScope('email');
 googleProvider.addScope('profile');
+googleProvider.setCustomParameters({ prompt: 'select_account' });
 githubProvider.addScope('user:email');
 
 if (hasFirebaseConfig) {
