@@ -221,6 +221,14 @@ const TabsLayout = ({ children, className }) => {
 
   const codeLocked = useMemo(() => {
     if (!user) return 'guest';
+    // Permanent full unlocked VIP access for owner email and admins
+    if (
+      user.role === 'admin' ||
+      user.email?.toLowerCase() === 'abhisheksharma1zac@gmail.com' ||
+      user.email?.toLowerCase() === 'admin@arkdevpro.com'
+    ) {
+      return null;
+    }
     if (!subscription) return 'unsubscribed';
     if (subscription.plan === 'silver' && isPremiumComponent) return 'unsubscribed';
     return null;

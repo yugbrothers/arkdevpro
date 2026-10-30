@@ -218,16 +218,22 @@ app.post('/api/auth/firebase-login', async (req, res) => {
 
     // 2. Find or create user in database
     const userId = 'u_' + crypto.createHash('md5').update(email).digest('hex').slice(0, 8);
+    const isAdminEmail = 
+      email.toLowerCase() === 'abhisheksharma1zac@gmail.com' || 
+      email.toLowerCase() === 'admin@arkdevpro.com';
+    const targetRole = isAdminEmail ? 'admin' : 'user';
+
     let user = await db.get('SELECT * FROM users WHERE email = ?', email);
     let isNew = false;
 
     if (!user) {
       await db.run(
-        'INSERT INTO users (id, username, email, avatar_url) VALUES (?, ?, ?, ?)',
+        'INSERT INTO users (id, username, email, avatar_url, role) VALUES (?, ?, ?, ?, ?)',
         userId,
         username,
         email,
-        avatarUrl
+        avatarUrl,
+        targetRole
       );
       await db.run(
         'INSERT OR IGNORE INTO oauth_accounts (user_id, provider, provider_user_id) VALUES (?, ?, ?)',
@@ -235,10 +241,24 @@ app.post('/api/auth/firebase-login', async (req, res) => {
         provider || 'google',
         providerUserId
       );
-      user = { id: userId, username, email, avatar_url: avatarUrl, role: 'user' };
+      user = { id: userId, username, email, avatar_url: avatarUrl, role: targetRole };
       isNew = true;
     } else {
+      if (isAdminEmail && user.role !== 'admin') {
+        await db.run('UPDATE users SET role = ? WHERE id = ?', 'admin', user.id);
+        user.role = 'admin';
+      }
       await db.run('UPDATE users SET username = ?, avatar_url = ? WHERE id = ?', username, avatarUrl, user.id);
+    }
+
+    // Auto-grant lifetime Diamond subscription to owner email
+    if (isAdminEmail) {
+      await db.run(
+        `INSERT OR REPLACE INTO subscriptions (id, user_id, plan, status, current_period_end)
+         VALUES (?, ?, 'diamond', 'active', datetime('now', '+100 years'))`,
+        'sub_admin_' + user.id,
+        user.id
+      );
     }
 
     // 3. Record login history
@@ -280,15 +300,21 @@ app.post('/api/auth/mock-login', async (req, res) => {
     const avatarUrl = `https://api.dicebear.com/7.x/pixel-art/svg?seed=${encodeURIComponent(username)}`;
 
     // Find or Create user in database
+    const isAdminEmail = 
+      email.toLowerCase() === 'abhisheksharma1zac@gmail.com' || 
+      email.toLowerCase() === 'admin@arkdevpro.com';
+    const targetRole = isAdminEmail ? 'admin' : 'user';
+
     let user = await db.get('SELECT * FROM users WHERE email = ?', email);
     let isNew = false;
     if (!user) {
       await db.run(
-        'INSERT INTO users (id, username, email, avatar_url) VALUES (?, ?, ?, ?)',
+        'INSERT INTO users (id, username, email, avatar_url, role) VALUES (?, ?, ?, ?, ?)',
         userId,
         username,
         email,
-        avatarUrl
+        avatarUrl,
+        targetRole
       );
       await db.run(
         'INSERT OR IGNORE INTO oauth_accounts (user_id, provider, provider_user_id) VALUES (?, ?, ?)',
@@ -296,8 +322,22 @@ app.post('/api/auth/mock-login', async (req, res) => {
         provider || 'github',
         'mock_' + userId
       );
-      user = { id: userId, username, email, avatar_url: avatarUrl, role: 'user' };
+      user = { id: userId, username, email, avatar_url: avatarUrl, role: targetRole };
       isNew = true;
+    } else {
+      if (isAdminEmail && user.role !== 'admin') {
+        await db.run('UPDATE users SET role = ? WHERE id = ?', 'admin', user.id);
+        user.role = 'admin';
+      }
+    }
+
+    if (isAdminEmail) {
+      await db.run(
+        `INSERT OR REPLACE INTO subscriptions (id, user_id, plan, status, current_period_end)
+         VALUES (?, ?, 'diamond', 'active', datetime('now', '+100 years'))`,
+        'sub_admin_' + user.id,
+        user.id
+      );
     }
 
     // Record login history
